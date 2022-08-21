@@ -1,5 +1,5 @@
 from typing import Optional, List
-
+import copy
 
 class StackObj:
     def __init__(self, data: str) -> None:
@@ -14,7 +14,7 @@ class StackObj:
     @data.setter
     def data(self, data: str) -> None:
         self.__data = data
-    
+
     @property
     def next(self) -> Optional['StackObj']:
         return self.__next
@@ -26,7 +26,7 @@ class StackObj:
 
     def __repr__(self) -> str:
         return f'{self.data}'
-    
+
 
 class Stack:
     def __init__(self) -> None:
@@ -53,13 +53,13 @@ class Stack:
         iter_obj = self.top
         while iter_obj.next.next is not None:
             iter_obj = iter_obj.next
+        return_obj = iter_obj.next
         iter_obj.next = None
+        return return_obj
 
     def get_data(self) -> Optional[List[StackObj]]:
-        if not self.top:
-            return []
         obj = self.top
-        objs_list =[]
+        objs_list = []
         while obj is not None:
             objs_list.append(obj.data)
             obj = obj.next
@@ -69,38 +69,45 @@ class Stack:
         return ' -> '.join(self.get_data())
 
 
+# s = Stack()
+# top = StackObj("obj_1")
+# s.push(top)
+# # s.push(StackObj("obj_2"))
+# # s.push(StackObj("obj_3"))
+# s.pop()
+
+# res = s.get_data()
+# assert res == ["obj_1", "obj_2"], f"метод get_data вернул неверные данные: {res}"
+# assert s.top == top, "атрибут top объекта класса Stack содержит неверное значение"
+
+# h = s.top
+# while h:
+#     res = h.data
+#     h = h.next
+
 s = Stack()
-top = StackObj("obj_1")
-s.push(top)
-s.push(StackObj("obj_2"))
-s.push(StackObj("obj_3"))
-s.pop()
+top1 = StackObj("obj_1")
+top2 = StackObj("obj_2")
+top3 = StackObj("obj_3")
+s.push(top1)
+s.push(top2)
+s.push(top3)
+pop = s.pop()
+print(pop)
+print(s)
 
-res = s.get_data()
-assert res == ["obj_1", "obj_2"], f"метод get_data вернул неверные данные: {res}"
-assert s.top == top, "атрибут top объекта класса Stack содержит неверное значение"
+# assert s.get_data() == [], f"метод get_data вернул неверные данные: {s.get_data()}"
 
-h = s.top
-while h:
-    res = h.data
-    h = h.next
-
-s = Stack()
-top = StackObj("obj_1")
-s.push(top)
-s.pop()
-assert s.get_data() == [], f"метод get_data вернул неверные данные: {s.get_data()}"
-
-n = 0
-h = s.top
-while h:
-    h = h.next
-    n += 1
+# n = 0
+# h = s.top
+# while h:
+#     h = h.next
+#     n += 1
     
-assert n == 0, "при удалении всех объектов, стек-подобная стурктура оказалась не пустой"
+# assert n == 0, "при удалении всех объектов, стек-подобная стурктура оказалась не пустой"
 
-s = Stack()
-top = StackObj("name_1")
-s.push(top)
-obj = s.pop()
-assert obj == top, "метод pop() должен возвращать удаляемый объект"
+# s = Stack()
+# top = StackObj("name_1")
+# s.push(top)
+# obj = s.pop()
+# assert obj == top, "метод pop() должен возвращать удаляемый объект"
