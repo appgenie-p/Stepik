@@ -41,6 +41,15 @@ class LinkedList:
         except AttributeError:
             return []
 
+    def __repr__(self) -> str:
+        obj = self.head
+        objs = []
+        while obj is not None:
+            objs.append(obj.get_data())
+            obj = obj.get_next()
+        objs.append('None')
+        return ' -> '.join(objs)
+
 
 class ObjList:
     def __init__(self, data: str) -> None:
@@ -78,3 +87,4 @@ lst.add_obj(ObjList("данные 4"))
 lst.remove_obj()
 res = lst.get_data()    # ['данные 1', 'данные 2', 'данные 3']
 print(res)
+print(lst)
