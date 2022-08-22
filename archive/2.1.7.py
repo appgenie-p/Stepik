@@ -1,5 +1,6 @@
 from typing import Tuple
 
+
 class Line:
     def __init__(self, x1: int, y1: int, x2: int, y2: int) -> None:
         self.__x1 = self.__y1 = self.__x2 = self.__y2 = 0

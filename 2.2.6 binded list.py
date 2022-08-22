@@ -1,5 +1,6 @@
-from typing import Optional, List
 import copy
+from typing import List, Optional
+
 
 class StackObj:
     def __init__(self, data: str) -> None:

@@ -1,5 +1,6 @@
 from typing import Any
 
+
 class Router:
     def __init__(self) -> None:
         self.buffer: list['Data'] = []
