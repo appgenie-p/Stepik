@@ -37,6 +37,10 @@ for i in table.cells:
         j.value = inc
         inc += 1
 
+print(
+    table.cells[0][0].value
+)
+
 assert isinstance(table, TableSheet)
 assert len(table.cells) == 5 and len(table.cells[0]) == 3
 
