@@ -1,13 +1,11 @@
 class InputValues:
     def __init__(self, render):
-        """render - функция или объект для преобразования данных из строк в
-        другой тип данных
-        """
         self.render = render
 
     def __call__(self, func):     # func - ссылка на декорируемую функцию
         def wrapper(*args, **kwargs):
-            pass
+            return [self.render(digit)
+                    for digit in func(*args, **kwargs).split()]
         return wrapper
 
 
@@ -22,13 +20,14 @@ class RenderDigit:
 render = RenderDigit()
 
 
-@InputValues(render)
-def input_dg():
-    return input()
+# @InputValues(render)
+def input_dg(string):
+    return string
 
+r = InputValues(RenderDigit())(input_dg)("123 rrr 555")
 
-res = input_dg()
-print(res)
+# res = input_dg("123 rrr 555")
+print(r)
 
 # assert render("123") == 123, 'не целое число)'
 # assert render("45.54") is None, 'не (не целое число)'
