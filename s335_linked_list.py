@@ -37,14 +37,26 @@ class LinkedList:
             self.tail = obj
 
     def remove_obj(self, indx: int):
-        if indx == 0:
-            self.head = self.tail = None
-            return
-        iter_obj = self.iter_linked_list()
-        for _ in range(indx):
-            obj = next(iter_obj)
-        obj.next = None
-        self.tail = obj
+        try:
+            iter_linked_objs = self.iter_linked_list()
+            for _ in range(indx+1):
+                obj_for_del = next(iter_linked_objs)
+        except StopIteration:
+            raise StopIteration('Такой индекс для списка объектов не сущ.')
+
+        if obj_for_del.next:
+            next_obj = obj_for_del.next
+            next_obj.prev = obj_for_del.prev
+            if not next_obj.next:
+                self.tail = next_obj
+        else:
+            self.tail = obj_for_del.prev
+        if obj_for_del.prev:
+            prev_obj = obj_for_del.prev
+            prev_obj.next = obj_for_del.next
+        else:
+            self.head = obj_for_del.next
+        obj_for_del = None
 
     def iter_linked_list(self) -> ObjList:
         obj = self.head
@@ -90,5 +102,3 @@ while h:
     n += 1
 
 assert n == 3, "при перемещении по списку через __prev не все объекты перебрались"
-
-ln.remove_obj(0)
