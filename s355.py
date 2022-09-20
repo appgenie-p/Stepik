@@ -1,5 +1,3 @@
-
-
 import re
 from typing import List, Sequence
 
@@ -12,21 +10,32 @@ stich = ["Я к вам пишу – чего же боле?",
         "Хоть каплю жалости храня,",
         "Вы не оставите меня."]
 
+
 class StringText:
     def __init__(self, lst_words: Sequence[str]) -> None:
         self.lst_words = lst_words
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{' '.join(self.lst_words)}"
+
+    def __len__(self) -> int:
+        return len(self.lst_words)
+
+    def __gt__(self, comparable: 'StringText') -> bool:
+        return len(self) > len(comparable)
+    
+    def __ge__(self, comparable: 'StringText') -> bool:
+        return len(self) >= len(comparable)
+
 
 lst_text = []
 for string in stich:
     raw_words = string.split()
     lst_text.append(
-        StringText([a for word in raw_words 
-        if len(
-            a := re.sub(r"[?!,.;–]", '', word)
-        ) > 0])
+        StringText(
+            [re.sub(r"[?!,.;–]", '', word) for word in raw_words 
+            if len(re.sub(r"[?!,.;–]", '', word)) > 0]
+        )
     )
 
-pass
+lst_text_sorted = [repr(phrase) for phrase in sorted(lst_text, reverse=True)]
