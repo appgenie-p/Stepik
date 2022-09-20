@@ -1,7 +1,8 @@
-from dateutil import tz
-from datetime import datetime
-from zoneinfo import ZoneInfo
+import re
 
-a = datetime.now(tz=tz.tzlocal())
 
-pass
+stich = "Я к вам пишу - чего_же боле?"
+
+res = re.sub(r"\-", '', stich)
+
+print(res)
