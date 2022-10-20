@@ -1,19 +1,5 @@
-class Car:
-    # def __init__(self) -> None:
-    #     self.__model: str = ''
+a = 'Балакирев; 34; 2048'
 
-    @property
-    def model(self):
-        return self.__model
+b = [string.strip() for string in a.split(';')]
 
-    @model.setter
-    def model(self, auto_model: str) -> None:
-        if isinstance(auto_model, str) and 2 <= len(auto_model) <= 100:
-            self.__model = auto_model
-
-    
-car = Car()
-car.model = 'sss'
-print(car.__dict__)
-print(dir(car))
-print(vars(car))
+print(b)
