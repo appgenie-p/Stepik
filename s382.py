@@ -20,6 +20,7 @@ class Record:
 
 
 r = Record(pk=1, title='Python ООП', author='Балакирев')
+breakpoint()
 print(r[0])
 r[0] = 2
 print(r[0])
