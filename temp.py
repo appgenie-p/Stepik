@@ -1,5 +1,6 @@
-a = 'Балакирев; 34; 2048'
+from pathlib import Path
 
-b = [string.strip() for string in a.split(';')]
 
-print(b)
+# project_folder = Path.cwd().absolute() / 'proName'
+project_folder = Path.cwd().absolute() / 'proName'
+print(project_folder)
