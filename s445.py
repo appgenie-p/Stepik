@@ -26,6 +26,9 @@ class Animal:
     def old(self, value):
         self.__old = value
 
+    def __repr__(self) -> str:
+        return self.name
+
 
 input_data = """
 Васька; дворовый кот; 5
@@ -33,6 +36,4 @@ input_data = """
 Кеша; попугай; 3
 """
 
-animal = [Animal(val.split('; ')) for val in input_data.strip().split('\n')]
-
-print(animal)
+animals = [Animal(*val.split('; ')) for val in input_data.strip().splitlines()]
