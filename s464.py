@@ -1,5 +1,8 @@
+from typing import Union
+
+
 class Digit:
-    def __init__(self, value) -> None:
+    def __init__(self, value: Union[int, float]) -> None:
         if type(value) not in (int, float):
             raise TypeError('значение не соответствует типу объекта')
         self.value = value
