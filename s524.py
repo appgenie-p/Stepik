@@ -1,4 +1,5 @@
 first, second = input().split()
+
 try:
     first, second = [int(val) for val in (first, second)]
 except Exception:
@@ -8,3 +9,5 @@ except Exception:
         pass
 finally:
     print(first + second)
+
+
