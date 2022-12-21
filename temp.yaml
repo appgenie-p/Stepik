@@ -1,0 +1,12 @@
+person: &person
+name: Maaike
+age: 30
+address:
+streetname: Langstraat
+number: 1
+zipcode: 1234AB
+country: The Netherlands
+another_person: *person
+yet_another_person:
+<<: *person
+name: maria
