@@ -9,5 +9,3 @@ except Exception:
         pass
 finally:
     print(first + second)
-
-

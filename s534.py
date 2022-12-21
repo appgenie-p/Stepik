@@ -13,5 +13,3 @@ class LoginForm:
                  password_validator: ValidatorString) -> None:
         self.login_validator = login_validator
         self.password_validator = password_validator
-
-    

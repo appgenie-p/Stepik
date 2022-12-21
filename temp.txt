@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "D:\Python\Projects\oop\ex1.py", line 26, in <module>
-    el = Ellipse(1, 2, 3, 4, '1')
-  File "D:\Python\Projects\oop\ex1.py", line 12, in __init__
-    super().__init__(width, color)
-  File "D:\Python\Projects\oop\ex1.py", line 4, in __init__
-    raise ValueError('неверные параметры фигуры')
-ValueError: неверные параметры фигуры
