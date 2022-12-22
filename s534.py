@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Optional
 
 
 class ValidatorString:
@@ -7,7 +7,7 @@ class ValidatorString:
         self.max_length = max_length
         self.chars = chars
 
-    def is_valid(self, string: str) -> bool:
+    def is_valid(self, string: Optional[str]) -> bool:
         if type(string) != str:
             raise ValueError('недопустимая строка')
         if not self.min_length <= len(string) <= self.max_length:
@@ -23,12 +23,9 @@ class LoginForm:
                  password_validator: ValidatorString,):
         self.login_validator = login_validator
         self.password_validator = password_validator
-        self._login = ...
-        self._password = ...
 
     def form(self, request: Dict[str, str]) -> None:
-        # breakpoint()
-        if not all(request.get('login') and request.get('password')):
+        if not all([request.get('login'), request.get('password')]):
             raise TypeError('в запросе отсутствует логин или пароль')
         if self.login_validator.is_valid(request.get('login')):
             self._login = request.get('login')
