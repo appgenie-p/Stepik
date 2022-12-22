@@ -8,14 +8,21 @@ class ValidatorString:
         self.chars = chars
 
     def is_valid(self, string: Optional[str]) -> bool:
-        if type(string) != str:
-            raise ValueError('недопустимая строка')
-        if not self.min_length <= len(string) <= self.max_length:
-            raise ValueError('недопустимая строка')
-        if len(self.chars) != 0:
-            if not any(symbol for symbol in string if symbol in self.chars):
-                raise ValueError('недопустимая строка')
-        return True
+        if all([
+            type(string) == str,
+            self.min_length <= len(string) <= self.max_length,
+            any(symbol for symbol in string if symbol in self.chars),
+        ]):
+            return True
+        return False
+        # if type(string) != str:
+        #     raise ValueError('недопустимая строка')
+        # if not self.min_length <= len(string) <= self.max_length:
+        #     raise ValueError('недопустимая строка')
+        # if len(self.chars) != 0:
+        #     if not any(symbol for symbol in string if symbol in self.chars):
+        #         raise ValueError('недопустимая строка')
+        # return True
 
 
 class LoginForm:
