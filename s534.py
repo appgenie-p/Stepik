@@ -11,18 +11,12 @@ class ValidatorString:
         if all([
             type(string) == str,
             self.min_length <= len(string) <= self.max_length,
-            any(symbol for symbol in string if symbol in self.chars),
+            any(symbol for symbol in string if symbol in self.chars) if len(
+                self.chars) != 0 else True,
         ]):
             return True
-        return False
-        # if type(string) != str:
-        #     raise ValueError('недопустимая строка')
-        # if not self.min_length <= len(string) <= self.max_length:
-        #     raise ValueError('недопустимая строка')
-        # if len(self.chars) != 0:
-        #     if not any(symbol for symbol in string if symbol in self.chars):
-        #         raise ValueError('недопустимая строка')
-        # return True
+
+        raise ValueError('недопустимая строка')
 
 
 class LoginForm:
@@ -37,7 +31,7 @@ class LoginForm:
         if self.login_validator.is_valid(request.get('login')):
             self._login = request.get('login')
         if self.password_validator.is_valid(request.get('password')):
-            self._password = request.get('login')
+            self._password = request.get('password')
 
 
 login_v = ValidatorString(4, 50, "")
