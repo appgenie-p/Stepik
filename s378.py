@@ -18,7 +18,8 @@ class GamePole:
         self.__total_mines = total_mines
         # __pole_cells - двумерный (вложенный) кортеж, размерами N x M элементов
         # (N строк и M столбцов), состоящий из объектов класса Cell.
-        self.__pole_cells = None
+        self.__pole_cells = tuple(tuple(Cell()
+                                  for _ in range(M)) for _ in range(N))
 
     @property
     def pole(self) -> tuple:
@@ -62,7 +63,7 @@ class Cell:
     """
     Cell описывает состояние одной ячейки игрового поля. 
     Объекты этого класса создаются командой: Cell()
-    
+
     """
 
     def __init__(self) -> None:
