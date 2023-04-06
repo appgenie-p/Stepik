@@ -10,7 +10,8 @@ class Dimensions:
         self.__b = b
         self.__c = c
 
-    def __check_dimension(self, value: int) -> None:
+    @classmethod
+    def __check_dimension(cls, value: int) -> None:
         return Dimensions.MIN_DIMENSION <= value <= Dimensions.MAX_DIMENSION
 
     @property
