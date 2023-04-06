@@ -1,51 +1,100 @@
-from typing import Tuple
+from typing import List, Tuple, Union
 
 import pytest
 
 
 class MaxPooling:
+    Matrix = List[List[int]]
+    Digit = Union[int, float]
+
     def __init__(
         self, step: Tuple[int, int] = (2, 2), size: Tuple[int, int] = (2, 2)
     ):
-        """
-        step - шаг смещения окна по горизонтали и вертикали;
-        size - размер окна по горизонтали и вертикали.
-        """
         self.step = step
         self.size = size
 
-    # res = mp(matrix)
-    def __call__(self, matrix: list[list[int]]) -> list[list[int]]:
-        # Check that all nested lists are equal size and all members are
-        # digits.
-        self._check_matrix(matrix)
-        # Get first square of size self.size from matrix and find max vlaue,
-        # add max value to result list.
-        res = []
-        step_right = self.step[0]
-        step_down = self.step[1]
-        for list in range(0, len(matrix), step_right):
-            res.append([])
-            list_len = matrix[0]
-            for list_member in range(0, len(list_len), step_down):
-                res[-1].append(
-                    self._get_max_value(
-                        matrix, list, list_member, self.size[0], self.size[1]
-                    )
-                )
-
     @classmethod
-    def _check_matrix(self, matrix):
+    def _check_matrix(self, matrix: Matrix) -> None:
         list_size = len(matrix[0])
-        for list in matrix:
-            if len(list) != list_size or not self._check_symbols(list):
-                raise ValueError(
-                    "Неверный формат для первого параметра matrix."
-                )
+        if any(
+            len(list) != list_size or not self._check_symbols(list)
+            for list in matrix
+        ):
+            raise ValueError("Неверный формат для первого параметра matrix.")
 
     @staticmethod
-    def _check_symbols(list):
-        return all(isinstance(symbol, int) for symbol in list)
+    def _check_symbols(list: List[Digit]) -> bool:
+        return all(isinstance(symbol, (int, float)) for symbol in list)
+
+    def _get_submatrix_max_value(
+        self, matrix: Matrix, x: int, y: int
+    ) -> Digit:
+        max_value = max(
+            matrix[local_y][local_x]
+            for local_y in range(y, y + self.size[1])
+            for local_x in range(x, x + self.size[0])
+        )
+        return max_value
+
+    # res = mp(matrix)
+    def __call__(self, matrix: Matrix) -> Matrix:
+        self._check_matrix(matrix)
+        x_axis_step, y_axis_step = self.step
+        x_axis_len = len(matrix[0])
+        y_axis_len = len(matrix)
+        x_axis_steps_count = x_axis_len // x_axis_step
+        y_axis_steps_count = y_axis_len // y_axis_step
+
+        # Get starting point for each submatrix and delegate max value
+        # calculation to _get_submatrix_max_value method.
+        res = []
+        for y_count in range(y_axis_steps_count):
+            res.append([])
+            y = y_count * y_axis_step
+            for x_count in range(x_axis_steps_count):
+                x = x_count * x_axis_step
+                res[y_count].append(
+                    self._get_submatrix_max_value(matrix, x, y)
+                )
+        return res
+
+    def __repr__(self):
+        return f"MaxPooling(step={self.step}, size={self.size})"
+
+
+mp = MaxPooling(step=(2, 2), size=(2, 2))
+m1 = [[1, 10, 10], [5, 10, 0], [0, 1, 2]]
+m2 = [[1, 10, 10, 12], [5, 10, 0, -5], [0, 1, 2, 300], [40, -100, 0, 54.5]]
+res1 = mp(m1)
+res2 = mp(m2)
+
+assert res1 == [[10]], "неверный результат операции MaxPooling"
+assert res2 == [[10, 12], [40, 300]], "неверный результат операции MaxPooling"
+
+mp = MaxPooling(step=(3, 3), size=(2, 2))
+m3 = [[1, 12, 14, 12], [5, 10, 0, -5], [0, 1, 2, 300], [40, -100, 0, 54.5]]
+res3 = mp(m3)
+assert res3 == [
+    [12]
+], "неверный результат операции при MaxPooling(step=(3, 3), size=(2,2))"
+
+try:
+    res = mp([[1, 2], [3, 4, 5]])
+except ValueError:
+    assert True
+else:
+    assert (
+        False
+    ), "некорректо отработала проверка (или она отсутствует) на не прямоугольную матрицу"
+
+try:
+    res = mp([[1, 2], [3, '4']])
+except ValueError:
+    assert True
+else:
+    assert (
+        False
+    ), "некорректо отработала проверка (или она отсутствует) на не числовые значения в матрице"
 
 
 @pytest.fixture
