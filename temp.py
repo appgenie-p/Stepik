@@ -1,90 +1,42 @@
-import pytest
+class Body:
+    def __init__(self, name, ro, volume):
+        if type(name) == str:
+            self.name = name
+        if isinstance(ro, (int, float)):
+            self.ro = ro
+        if isinstance(volume, (int, float)):
+            self.volume = volume
 
+    def weight(self):
+        return self.ro * self.volume
 
-class Money:
-    def __init__(self, volume=0.0):
-        self.cb, self.volume = None, volume
-
-    @property
-    def cb(self):
-        return self.__cb
-
-    @cb.setter
-    def cb(self, value):
-        self.__cb = value
-
-    @property
-    def volume(self):
-        return self.__volume
-
-    @volume.setter
-    def volume(self, value):
-        self.__volume = value
-
-    def __abs__(self):
-        if not self.cb:
-            raise ValueError("Неизвестен курс валют.")
-        return self.cb.convert(self.volume, self.prop, 'rub')
+    @staticmethod
+    def choose(other):
+        if isinstance(other, Body):
+            return other.weight()
+        elif isinstance(other, (int, float)):
+            return other
+        raise ValueError("Неведома зверюшка")
 
     def __eq__(self, other):
-        return abs(abs(self) - abs(other)) <= 0.1
+        return self.weight() == self.choose(other)
 
-    def __gt__(self, other):
-        return abs(self) - abs(other) > 0.1
-
-    def __ge__(self, other):
-        return abs(self) - abs(other) >= 0.1
+    def __lt__(self, other):
+        return self.weight() < self.choose(other)
 
 
-class MoneyR(Money):
-    prop = 'rub'
-
-
-class MoneyD(Money):
-    prop = 'dollar'
-
-
-class MoneyE(Money):
-    prop = 'euro'
-
-
-class CentralBank:
-    rates = {'rub': 72.5, 'dollar': 1.0, 'euro': 1.15}
-
-    def __new__(cls):
-        return None
-
-    @classmethod
-    def register(cls, money):
-        if isinstance(money, Money):
-            money.cb = cls
-
-    @classmethod
-    def convert(cls, _value, _from, _to):
-        if _from == _to:
-            return _value
-        return _value * cls.rates.get(_to) / cls.rates.get(_from)
-
-
-###########################
-
-
-def test_job():
-    r = MoneyR(45000)
-    d = MoneyD(500)
-    CentralBank.register(r)
-    CentralBank.register(d)
-    assert r.cb is CentralBank
-    assert r > d
-
-
-def test_job1():
-    r = MoneyR(20000)
-    d = MoneyD(500)
-    CentralBank.register(r)
-    CentralBank.register(d)
-    assert r < d
-
-
-if __name__ == '__main__':
-    pytest.main([__file__])
+# Test class Body with assert.
+if __name__ == "__main__":
+    b1 = Body("b1", 1, 1)
+    b2 = Body("b2", 2, 2)
+    b3 = Body("b3", 3, 3)
+    assert b1 == 1
+    assert b2 == 4
+    assert b3 == 9
+    # assert b1 > 0
+    # assert b2 > 1
+    # assert b3 > 4
+    assert b1 < 2
+    # assert b2 > 3
+    assert b3 < 10
+    print("OK")
