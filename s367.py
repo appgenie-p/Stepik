@@ -1,42 +1,43 @@
-# import sys
-from typing import Annotated, List, TypeVar, Union
-from annotated_types import Gt
-
-PositiveInt = TypeVar('PositiveInt', int, Annotated[int, Gt[0]])
+import sys
+from typing import List, Union
 
 
 class Record:
+    pk_counter = 0
+
     def __init__(self, fio: str, description: str, old: int):
         self.fio = fio
-        self.description = description
+        self.descr = description
         self.old = old
-        self._pk: Annotated[int, Gt[0]] = 0
+        self.pk: int = self._pk_generator()
 
-    # set pk unique for each object in db
+    @classmethod
+    def _pk_generator(cls):
+        cls.pk_counter += 1
+        return cls.pk_counter
 
     def __repr__(self):
-        return f"Record({self.fio}, {self.description}, {self.old})"
+        return f"Record({self.fio}, {self.descr}, {self.old})"
 
     # calculate hash by fio и old. Register is not important.
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((self.fio.lower(), self.old))
 
     # for object with equal hash equality should be true
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         if not isinstance(other, Record):
             return False
         return hash(self) == hash(other)
 
 
-# db = DataBase(path)
 class DataBase:
     def __init__(self, path: str):
         self._path = path
         self.dict_db: dict[Record, List[Record]] = {}
 
-    def read(self, pk: PositiveInt) -> Union['Record', None]:
+    def read(self, pk: int) -> Union['Record', None]:
         for record in self.dict_db:
-            if record._pk == pk:
+            if record.pk == pk:
                 return record
         return None
 
@@ -64,5 +65,3 @@ for line in lst_in:
     fio, description, old = line.split(';')
     record = Record(fio, description, int(old))
     db.write(record)
-
-pass
