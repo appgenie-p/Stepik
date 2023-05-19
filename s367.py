@@ -42,10 +42,7 @@ class DataBase:
         return None
 
     def write(self, record: 'Record') -> None:
-        if record in self.dict_db:
-            self.dict_db[record].append(record)
-        else:
-            self.dict_db[record] = [record]
+        self.dict_db.setdefault(record, []).append(record)
 
 
 # lst_in = list(map(str.strip, sys.stdin.readlines()))
@@ -65,3 +62,5 @@ for line in lst_in:
     fio, description, old = line.split(';')
     record = Record(fio, description, int(old))
     db.write(record)
+
+dict.setdefault
