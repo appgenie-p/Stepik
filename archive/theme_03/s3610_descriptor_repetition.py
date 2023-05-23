@@ -15,7 +15,7 @@ class Descriptor:
 
     def __set__(self, instance, value: Tr) -> None:
         '''sets the value to instance and perform value validation'''
-        if not isinstance(value, numbers.Integral):
+        if not isinstance(value, numbers.Real):
             raise TypeError("Value should be a number.")
         if value < 0:
             raise ValueError("Value should be positive.")
