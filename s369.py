@@ -1,6 +1,7 @@
+test = True
+
 from typing import Union
 
-test = False
 
 DimType = Union[int, float]
 
@@ -28,7 +29,7 @@ class Dimensions:
         return self.hash()
 
 
-if test:
+if 'test' in locals():
     s_inp = "1 2 3; 4 5 6.78; 1 2 3; 3 1 2.5"
 else:
     s_inp = input()
@@ -38,4 +39,4 @@ lst_dims = [
     Dimensions(*(float(x) for x in line.split())) for line in s_inp.split("; ")
 ]
 
-lst_dims.sort(key=lambda x: hash(x))
+lst_dims.sort(key=hash)
