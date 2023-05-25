@@ -25,39 +25,19 @@ class TicTacToe:
                 self.pole[raw][col].value = 0
 
     def __getitem__(self, index):
-        raw, col = index
-        cell = self.pole[raw][col]
-        if isinstance(col, slice):
+        cell = self.pole[index[0]][index[1]]
+        if isinstance(index[1], slice):
             return tuple([item.value for item in cell])
-        if isinstance(raw, slice):
-            return tuple([item[col].value for item in self.pole[raw]])
+        if isinstance(index[0], slice):
+            return tuple(
+                [item[index[1]].value for item in self.pole[index[0]]]
+            )
         return cell.value
 
     def __setitem__(self, index, value):
-        raw, col = index
-        cell = self.pole[raw][col]
+        cell = self.pole[index[0]][index[1]]
         if cell.value != 0:
-            raise IndexError("клетка уже занята")
+            raise IndexError("летка уже занята")
         cell.value = value
         cell.is_free = False
 
-
-g = TicTacToe()
-
-g.clear()
-g[0, 0] = 1
-g[1, 0] = 2
-g[2, 0] = 3
-
-
-assert (
-    g[0, :] == (1, 0, 0) and g[1, :] == (2, 0, 0) and g[:, 0] == (1, 2, 3)
-), "некорректно отработали срезы после вызова метода clear() и присваивания новых значений"
-
-cell = Cell()
-assert (
-    cell.value == 0
-), "начальное значение атрибута value класса Cell должно быть равно 0"
-res = cell.is_free
-cell.is_free = True
-assert bool(cell), "функция bool вернула False для свободной клетки"
