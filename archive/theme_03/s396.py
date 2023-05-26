@@ -3,11 +3,7 @@ class TriangleListIterator:
         self.lst = lst
 
     def __iter__(self):
-        return (
-            self.lst[row][col]
-            for row in range(len(self.lst))
-            for col in range(len(self.lst[row]))
-        )
+        return (item for raw in self.lst for item in raw)
 
 
 lst = [
