@@ -1,5 +1,6 @@
 import pytest
-from s3910 import Matrix
+from s3910_copy import Matrix
+
 
 @pytest.fixture
 def matrix():
