@@ -17,7 +17,7 @@ class Matrix:
         raise TypeError('ожидается 1 или 3 аргумента')
 
     @initialize.register
-    def _(self, arg: list):
+    def ready_to_use_list(self, arg: list):
         cols_number = len(arg[0])
         for row in arg:
             if len(row) != cols_number:
@@ -31,7 +31,7 @@ class Matrix:
         self.cols = cols_number
 
     @initialize.register
-    def _(self, rows: int, cols: int, fill_value: Union[int, float]):
+    def positional(self, rows: int, cols: int, fill_value: Union[int, float]):
         self.check_value(fill_value)
         self.matrix = [[fill_value] * cols for _ in range(rows)]
         self.rows = rows
