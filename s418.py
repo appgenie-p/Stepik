@@ -1,47 +1,36 @@
 """Data validation module"""
 
 from abc import abstractmethod
-from typing import Generic, Type, TypeVar
-
-T = TypeVar('T', Type[int], Type[float])
+from typing import Any, Generic, Type, TypeVar
 
 
-class Validator(Generic[T]):
+class Validator:
     """Базовый класс для валидаторов"""
 
     @abstractmethod
-    def _is_valid(self, data: T) -> bool:
-        pass
+    def _is_valid(self, data: Any) -> bool:
+        return True
 
-    def __call__(self, data: T):
+    def __call__(self, data: Any) -> Any:
         if not self._is_valid(data):
-            raise ValueError('данные не прошли валидацию')
+            raise ValueError("Invalid data")
         return data
 
 
-class ValidatorInit(Validator, Generic[T]):
-    """Абстрактный класс для валидаторов с параметрами"""
+class IntegerValidator(Validator):
+    """Валидатор целых чисел в заданном диапазоне."""
 
-    VALIDATOR_TYPE: T
-
-    def __init__(self, min_value: int, max_value: int):
+    def __init__(self, min_value: int, max_value: int) -> None:
         self.min_value = min_value
         self.max_value = max_value
 
-    def _is_valid(self, data: T) -> bool:
-        return (
-            isinstance(data, self.VALIDATOR_TYPE)
-            and self.min_value <= data <= self.max_value
+    def _is_valid(self, data: Any) -> bool:
+        return isinstance(data, int) and (
+            self.min_value <= data <= self.max_value
         )
 
-    def __init_subclass__(cls, validator_type: T, **kwargs):
-        super().__init_subclass__(**kwargs)
-        cls.VALIDATOR_TYPE = validator_type
 
-
-class IntegerValidator(ValidatorInit, validator_type=int):
-    """Валидатор целых чисел"""
-
-
-class FloatValidator(ValidatorInit, validator_type=float):
-    """Валидатор вещественных чисел"""
+integer_validator = IntegerValidator(-10, 10)
+# float_validator = FloatValidator(-1, 1)
+res1 = integer_validator(10)  # исключение не генерируется (проверка проходит)
+# res2 = float_validator(10)    # исключение ValueError
