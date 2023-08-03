@@ -1,13 +1,15 @@
-from typing import TypeVar
+from __future__ import annotations
 
-Abc = TypeVar("Abc", bound="A")
-
-
-class A:
-    def __init__(self, x: int) -> None:
-        self.x = x
+from typing_extensions import TypeGuard
 
 
-class B(A):
-    def __init__(self, x: int) -> None:
-        super().__init__(x)
+def is_str_list(value: list[object]) -> TypeGuard[list[str]]:
+    """Are all list items strings?"""
+    return all(isinstance(x, str) for x in value)
+
+
+x: list[object]
+
+reveal_type(x)
+if is_str_list(x):
+    reveal_type(x)
