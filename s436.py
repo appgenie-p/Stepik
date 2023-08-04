@@ -1,10 +1,11 @@
-from typing import Any, Callable, Dict, Optional
+from collections import defaultdict
+from typing import Any, Callable, Dict, Optional, Type
 
 F = Callable[..., Any]
 
 
 class Router:
-    app: Dict[str, F] = {}
+    app: Dict[str, F] = defaultdict(F)
 
     @classmethod
     def get(cls, path: str) -> Optional[F]:
@@ -15,12 +16,11 @@ class Router:
         cls.app[path] = func
 
 
-# @Callback('/', Router)
-# def index():
-#     return '<h1>Главная</h1>'
+class Callback:
+    def __init__(self, path: str, router: Type[Router]) -> None:
+        self.path = path
+        self.router = router
 
-
-# route = Router.get('/')
-# if route:
-#     ret = route()
-#     print(ret)
+    def __call__(self, func: F) -> F:
+        self.router.add_callback(self.path, func)
+        return func
