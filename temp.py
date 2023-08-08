@@ -1,13 +1,24 @@
-from collections import defaultdict
+from typing import Callable, TypeVar
 
-# Create a defaultdict with int as the default value type
-number_counts = defaultdict(int)
-# number_counts = {}
+from typing_extensions import Concatenate, ParamSpec
 
-numbers = [1, 2, 3, 1, 2, 3, 4, 5, 4, 5, 1]
+P = ParamSpec('P')
+T = TypeVar('T')
 
-# Count the occurrences of each number
-for num in numbers:
-    number_counts[num] += 1
 
-print(number_counts)
+def printing_decorator(
+    func: Callable[P, T]
+) -> Callable[Concatenate[str, P], T]:
+    def wrapper(msg: str, /, *args: P.args, **kwds: P.kwargs) -> T:
+        print("Calling", func, "with", msg)
+        return func(*args, **kwds)
+
+    return wrapper
+
+
+@printing_decorator
+def add_forty_two(value: int) -> int:
+    return value + 42
+
+
+a = add_forty_two('three', 3)
