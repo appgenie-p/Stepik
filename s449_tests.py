@@ -1,6 +1,6 @@
 import pytest
 
-from s449 import Vector, vector_log
+from s449_class_decorator import Vector, vector_log
 
 
 def test_decorator():
