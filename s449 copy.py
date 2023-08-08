@@ -1,3 +1,4 @@
+from functools import wraps
 from typing import Any, Callable, List, Type, TypeVar
 
 vector_log: List[str] = []
@@ -19,6 +20,7 @@ def class_log(log: Logs) -> Callable[[Type[T]], Type[T]]:
 
 
 def log_decorator(method: Callable[..., T], log: Logs) -> Callable[..., T]:
+    @wraps(method)
     def wrapper(*args: Any, **kwargs: Any) -> T:
         log.append(method.__name__)
         return method(*args, **kwargs)
