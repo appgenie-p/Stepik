@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Generic, Optional, TypeVar
+from typing import Any, Optional, TypeVar
 
 T = TypeVar("T", bound="StackObj")
 
@@ -16,36 +16,30 @@ class StackInterface(ABC):
 
 class Stack(StackInterface):
     def __init__(self):
-        # first stack object
         self._top: Optional["StackObj"] = None
 
-    def push_back(self, obj: "StackObj"):
+    def push_back(self, obj: "StackObj") -> None:
         if self._top is None:
             self._top = obj
-        elif self._top.next is None:
-            self._top.next = obj
         else:
-            last = self._top.next
-            last = self.return_last_obj(last)
-            last.next = obj
-
-    def return_last_obj(self, last: "StackObj") -> "StackObj":
-        while last.next is not None:
-            last = last.next
-        return last
+            last_obj = self._top
+            while last_obj.next is not None:
+                last_obj = last_obj.next
+            last_obj.next = obj
 
     def pop_back(self) -> Optional["StackObj"]:
         if self._top is None:
             return None
-        elif self._top.next is None:
-            last = self._top
+        if self._top.next is None:
+            obj = self._top
             self._top = None
-            return last
-        else:
-            last = self._top.next
-            last = self.return_penult_obj(last)
-            last.next = None
-            return last
+            return obj
+        penult: StackObj = self._top
+        while penult.next.next is not None:
+            penult = penult.next
+        obj = penult.next
+        penult.next = None
+        return obj
 
 
 class StackObj:
@@ -58,5 +52,5 @@ class StackObj:
         return self._next
 
     @next.setter
-    def next(self, obj: "StackObj") -> None:
+    def next(self, obj: Optional["StackObj"]) -> None:
         self._next = obj

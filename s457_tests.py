@@ -55,3 +55,10 @@ def test_stack_pop_back_from_two(s, so):
     s.push_back(so[1])
     assert s.pop_back() == so[1]
     assert s._top.next == None
+
+def test_stack_pop_back_from_three(s, so):
+    s.push_back(so[0])
+    s.push_back(so[1])
+    s.push_back(so[2])
+    assert s.pop_back() == so[2]
+    assert s._top.next.next == None
