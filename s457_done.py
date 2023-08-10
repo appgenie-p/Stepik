@@ -22,25 +22,24 @@ class Stack(StackInterface):
         if self._top is None:
             self._top = obj
         else:
-            *_, last_obj = self
+            last_obj = self._top
+            while last_obj.next is not None:
+                last_obj = last_obj.next
             last_obj.next = obj
 
     def pop_back(self) -> Optional["StackObj"]:
         if self._top is None:
             return None
         if self._top.next is None:
-            last_obj = self._top
+            obj = self._top
             self._top = None
-            return last_obj
-        *_, penult_obj, last_obj = self
-        penult_obj.next = None
-        return last_obj
-
-    def __iter__(self):
-        last_obj = self._top
-        while last_obj is not None:
-            yield last_obj
-            last_obj = last_obj.next
+            return obj
+        penult: StackObj = self._top
+        while penult.next.next is not None:
+            penult = penult.next
+        obj = penult.next
+        penult.next = None
+        return obj
 
 
 class StackObj:
