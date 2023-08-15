@@ -1,4 +1,4 @@
-from typing import Iterable, List, Optional
+from typing import Iterable
 
 
 class ShopItem:
@@ -15,16 +15,16 @@ class ShopItem:
 
 class ShopGenericView:
     def __str__(self) -> str:
-        return create_str_repr_output(self, "")
+        return create_str_repr_output(self)
 
 
 class ShopUserView:
     def __repr__(self) -> str:
-        return create_str_repr_output(self, ["_id"])
+        return create_str_repr_output(self, attrs_exclude=["_id"])
 
 
 def create_str_repr_output(
-    object: object, attrs_exclude: Iterable[str]
+    object: object, attrs_exclude: Iterable[str] = ""
 ) -> str:
     res = ""
     for attr, value in vars(object).items():
