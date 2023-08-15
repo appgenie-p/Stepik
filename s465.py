@@ -1,13 +1,12 @@
-from typing import Iterable
+from typing import Any, Iterable
 
 
 class ShopItem:
-    ID_SHOP_ITEM = 0
+    id_shop_item = 0
 
     def __init__(self):
-        super().__init__()
-        ShopItem.ID_SHOP_ITEM += 1
-        self._id = ShopItem.ID_SHOP_ITEM
+        ShopItem.id_shop_item += 1
+        self._id = ShopItem.id_shop_item
 
     def get_pk(self):
         return self._id
@@ -15,19 +14,19 @@ class ShopItem:
 
 class ShopGenericView:
     def __str__(self) -> str:
-        return create_str_repr_output(self)
+        return create_str_repr_output(vars(self))
 
 
 class ShopUserView:
     def __repr__(self) -> str:
-        return create_str_repr_output(self, attrs_exclude=["_id"])
+        return create_str_repr_output(vars(self), attrs_exclude=["_id"])
 
 
 def create_str_repr_output(
-    object: object, attrs_exclude: Iterable[str] = ""
+    attrs: dict[str, Any], attrs_exclude: Iterable[str] = ""
 ) -> str:
     res = ""
-    for attr, value in vars(object).items():
+    for attr, value in vars(attrs).items():
         if attr not in attrs_exclude:
             res += f"{attr}: {value}\n"
     return res
