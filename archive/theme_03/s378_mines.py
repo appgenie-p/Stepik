@@ -5,17 +5,18 @@ class GamePole:
     """
     Cоздание и управление игровым полем.
 
-    Каждая клетка игрового поля представлена объектом класса Cell и содержать 
+    Каждая клетка игрового поля представлена объектом класса Cell и содержать
     либо число мин вокруг этой клетки, либо саму мину.
     """
+
     def __new__(cls, *args, **kwargs):
         """
         Возвращает ссылку на единственный экземпляр класса GamePole.
         """
-        if not hasattr(cls, 'instance'):
+        if not hasattr(cls, "instance"):
             cls.instance = super(GamePole, cls).__new__(cls)
         return cls.instance
-    
+
     def __del__(self):
         """
         Удаляет ссылку на единственный экземпляр класса GamePole.
@@ -32,8 +33,7 @@ class GamePole:
 
         # __pole_cells - двумерный (вложенный) кортеж, размерами N x M элементов
         # (N строк и M столбцов), состоящий из объектов класса Cell.
-        self.__pole_cells = tuple(tuple(Cell()
-                                  for _ in range(M)) for _ in range(N))
+        self.__pole_cells = tuple(tuple(Cell() for _ in range(M)) for _ in range(N))
         self.init_pole()
 
     @property
@@ -47,7 +47,7 @@ class GamePole:
         """
         Для инициализации начального состояния игрового поля (расставляет мины
         и делает все клетки закрытыми).
-        После расстановки всех total_mines мин, вычислите их количество вокруг 
+        После расстановки всех total_mines мин, вычислите их количество вокруг
         остальных клеток (где нет мин). Область охвата - соседние (прилегающие)
         клетки (8 штук).
         """
@@ -81,7 +81,7 @@ class GamePole:
     def open_cell(self, i: int, j: int) -> None:
         """
         Открывает ячейку с индексами (i, j); нумерация индексов начинается с
-        нуля; 
+        нуля;
         метод меняет значение атрибута __is_open объекта Cell в
         ячейке (i, j) на True;
 
@@ -90,7 +90,7 @@ class GamePole:
         raise IndexError('некорректные индексы i, j клетки игрового поля')
         """
         if i < 0 or i >= self.__N or j < 0 or j >= self.__M:
-            raise IndexError('некорректные индексы i, j клетки игрового поля')
+            raise IndexError("некорректные индексы i, j клетки игрового поля")
         self.__pole_cells[i][j].is_open = True
 
     def show_pole(self) -> None:
@@ -100,15 +100,15 @@ class GamePole:
         for i in range(self.__N):
             for j in range(self.__M):
                 if self.__pole_cells[i][j].is_open:
-                    print(self.__pole_cells[i][j].number, end=' ')
+                    print(self.__pole_cells[i][j].number, end=" ")
                 else:
-                    print('*', end=' ')
+                    print("*", end=" ")
             print()
 
 
 class Cell:
     """
-    Cell описывает состояние одной ячейки игрового поля. 
+    Cell описывает состояние одной ячейки игрового поля.
     Объекты этого класса создаются командой: Cell()
 
     """
@@ -183,14 +183,14 @@ class Cell:
         if self.is_open:
             return str(self.number)
         else:
-            return '*'
+            return "*"
 
     def check_value_bool(self, value: bool) -> bool:
         """
         Проверяет, является ли переданное значение булевым.
         """
         if not isinstance(value, bool):
-            raise ValueError('Недопустимое значение атрибута')
+            raise ValueError("Недопустимое значение атрибута")
         return value
 
     def check_value_int(self, value: int) -> int:
@@ -198,7 +198,7 @@ class Cell:
         Проверяет, является ли переданное значение целым числом от 0 до 8.
         """
         if not isinstance(value, int) or value < 0 or value > 8:
-            raise ValueError('Недопустимое значение атрибута')
+            raise ValueError("Недопустимое значение атрибута")
         return value
 
 

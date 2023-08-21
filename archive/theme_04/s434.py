@@ -28,9 +28,7 @@ Dimensions = NamedTuple(
 
 
 class Auto(Thing):
-    def __init__(
-        self, name: str, weight: float, dims: Tuple[Number, Number, Number]
-    ):
+    def __init__(self, name: str, weight: float, dims: Tuple[Number, Number, Number]):
         super().__init__(name, weight)
         self.dims = Dimensions(*dims)
 

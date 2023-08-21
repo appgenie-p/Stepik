@@ -7,11 +7,11 @@ class StackObj:
         self.__next = None
 
     @property
-    def next(self) -> 'StackObj':
+    def next(self) -> "StackObj":
         return self.__next
 
     @next.setter
-    def next(self, value: 'StackObj'):
+    def next(self, value: "StackObj"):
         self.__next = value
 
 
@@ -39,20 +39,20 @@ class Stack:
                 current = current.next
             current.next = None
 
-    def __add__(self, new_obj: StackObj) -> 'Stack':
+    def __add__(self, new_obj: StackObj) -> "Stack":
         self.push_back(new_obj)
         return self
 
-    def __iadd__(self, new_obj: StackObj) -> 'Stack':
+    def __iadd__(self, new_obj: StackObj) -> "Stack":
         self.__add__(new_obj)
         return self
 
-    def __mul__(self, values: List[str]) -> 'Stack':
+    def __mul__(self, values: List[str]) -> "Stack":
         for value in values:
             self.push_back(StackObj(value))
         return self
 
-    def __imul__(self, values: List[str]) -> 'Stack':
+    def __imul__(self, values: List[str]) -> "Stack":
         self.__mul__(values)
         return self
 

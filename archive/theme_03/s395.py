@@ -5,17 +5,22 @@ class Person:
     TypesUsed = Union[str, int, float]
 
     def __init__(
-            self, fio: str, job: str, old: int, salary: Union[int, float],
-            year_job: int) -> None:
+        self, fio: str, job: str, old: int, salary: Union[int, float], year_job: int
+    ) -> None:
         self.fio, self.job, self.old, self.salary, self.year_job = (
-                fio, job, old, salary, year_job)
+            fio,
+            job,
+            old,
+            salary,
+            year_job,
+        )
         self.attr_index = list(enumerate(self.__dict__.keys()))
 
     def get_key_by_index(self, index: int) -> str:
         try:
             return self.attr_index[index][1]
         except IndexError:
-            raise IndexError('неверный индекс')
+            raise IndexError("неверный индекс")
 
     def __getitem__(self, index: int) -> TypesUsed:
         return self.__dict__[self.get_key_by_index(index)]
@@ -36,9 +41,9 @@ class Person:
             raise StopIteration
 
 
-pers = Person('Гейтс Б.', 'бизнесмен', 61, 1000000, 46)
+pers = Person("Гейтс Б.", "бизнесмен", 61, 1000000, 46)
 print(pers[0])
-pers[0] = 'Балакирев С.М.'
+pers[0] = "Балакирев С.М."
 
 for v in pers:
     print(v)

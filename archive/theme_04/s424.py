@@ -14,13 +14,13 @@ class Thing:
 class DictShop(Dict[Thing, Thing]):
     def __init__(self, things: Mapping[Any, Thing] = {}):
         if not isinstance(things, dict):
-            raise TypeError('аргумент должен быть словарем')
+            raise TypeError("аргумент должен быть словарем")
 
         if not all(isinstance(x, Thing) for x in things.keys()):
-            raise TypeError('все ключи должны быть экземплярами Thing')
+            raise TypeError("все ключи должны быть экземплярами Thing")
         super().__init__(things)
 
     def __setitem__(self, key: Any, value: Thing) -> None:
         if not isinstance(key, Thing):
-            raise TypeError('все ключи должны быть экземплярами Thing')
+            raise TypeError("все ключи должны быть экземплярами Thing")
         super().__setitem__(key, value)

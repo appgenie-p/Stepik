@@ -20,7 +20,5 @@ def test_book_repr():
 
     book = Book_repr("Python ООП", "Балакирев", 2022)
     assert str(book) == (
-        f"_title: {book._title}\n"
-        f"_author: {book._author}\n"
-        f"_year: {book._year}\n"
+        f"_title: {book._title}\n" f"_author: {book._author}\n" f"_year: {book._year}\n"
     )

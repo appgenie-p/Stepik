@@ -1,8 +1,8 @@
 from functools import wraps
 from typing import Callable, List, ParamSpec, Type, TypeVar
 
-T = TypeVar('T')
-P = ParamSpec('P')
+T = TypeVar("T")
+P = ParamSpec("P")
 
 
 def integer_params(cls: Type[T]) -> Type[T]:
@@ -15,10 +15,8 @@ def integer_params(cls: Type[T]) -> Type[T]:
 def integer_params_decorated(func: Callable[P, T]) -> Callable[P, T]:
     @wraps(func)
     def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
-        if not all(
-            isinstance(arg, int) for arg in (*args[1:], *kwargs.values())
-        ):
-            raise TypeError('All arguments must be integers')
+        if not all(isinstance(arg, int) for arg in (*args[1:], *kwargs.values())):
+            raise TypeError("All arguments must be integers")
         return func(*args, **kwargs)
 
     return wrapper

@@ -1,9 +1,7 @@
 import subprocess
 from time import sleep
 
-with subprocess.Popen(
-    ["python", "timer.py", "5"], stdout=subprocess.PIPE
-    ) as process:
+with subprocess.Popen(["python", "timer.py", "5"], stdout=subprocess.PIPE) as process:
 
     def poll_and_read():
         print(f"Output from poll: {process.poll()}")

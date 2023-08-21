@@ -15,7 +15,7 @@ class Video:
         """для воспроизведения видео (метод выводит на экран строку
         "воспроизведение видео <name>").
         """
-        print(f'воспроизведение видео {self.name}')
+        print(f"воспроизведение видео {self.name}")
 
 
 class YouTube:
@@ -25,6 +25,7 @@ class YouTube:
     Методы add_video и play вызывайте напрямую из класса YouTube. Создавать
     экземпляр этого класса не нужно.
     """
+
     videos: List[Video] = []
 
     @classmethod
@@ -49,8 +50,8 @@ class YouTube:
 add_video класса YouTube, добавьте в него эти два видео и воспроизведите
 (с помощью метода play класса YouTube) сначала первое, а затем, второе видео.
 """
-v1 = Video('Python')
-v2 = Video('Python ООП')
+v1 = Video("Python")
+v2 = Video("Python ООП")
 YouTube.add_video(v1)
 YouTube.add_video(v2)
 YouTube.play(0)

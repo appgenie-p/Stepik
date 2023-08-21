@@ -2,15 +2,15 @@ class AppStore:
     apps: list = []
 
     @classmethod
-    def add_application(cls, app: 'Application'):
+    def add_application(cls, app: "Application"):
         cls.apps.append(app)
 
     @classmethod
-    def remove_application(cls, app: 'Application'):
+    def remove_application(cls, app: "Application"):
         cls.apps.remove(app)
 
     @classmethod
-    def block_application(cls, app: 'Application'):
+    def block_application(cls, app: "Application"):
         indx = cls.apps.index(app)
         if not indx:
             return False

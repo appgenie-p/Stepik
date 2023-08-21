@@ -29,9 +29,7 @@ class TicTacToe:
         if isinstance(index[1], slice):
             return tuple([item.value for item in cell])
         if isinstance(index[0], slice):
-            return tuple(
-                [item[index[1]].value for item in self.pole[index[0]]]
-            )
+            return tuple([item[index[1]].value for item in self.pole[index[0]]])
         return cell.value
 
     def __setitem__(self, index, value):
@@ -40,4 +38,3 @@ class TicTacToe:
             raise IndexError("летка уже занята")
         cell.value = value
         cell.is_free = False
-

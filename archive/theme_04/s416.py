@@ -9,7 +9,7 @@ Methods = Union[List[str], Tuple[str, ...]]
 class GenericView:
     """GenericView: A class for handling generic views."""
 
-    def __init__(self, methods: Methods = ('GET',)):
+    def __init__(self, methods: Methods = ("GET",)):
         self.methods = methods
 
     @abstractmethod
@@ -30,10 +30,10 @@ class DetailView(GenericView):
     """DetailView: A class for handling detail views."""
 
     def render_request(self, request: dict, method: str) -> str:
-        if 'url' not in request:
-            raise TypeError('request не содержит обязательного ключа url')
+        if "url" not in request:
+            raise TypeError("request не содержит обязательного ключа url")
         if method not in self.methods:
-            raise TypeError('данный запрос не может быть выполнен')
+            raise TypeError("данный запрос не может быть выполнен")
 
         current_method = getattr(self, method.lower())
         return current_method(request)
@@ -42,6 +42,6 @@ class DetailView(GenericView):
         return f"url: {request['url']}"
 
 
-dv = DetailView(('GET', 'POST'))
-html = dv.render_request({'url': 'https://site.ru/home'}, 'GET')
+dv = DetailView(("GET", "POST"))
+html = dv.render_request({"url": "https://site.ru/home"}, "GET")
 print(html)

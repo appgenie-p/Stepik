@@ -55,9 +55,9 @@ class VideoRatingImplementation:
 
 
 v = VideoItem(
-    'Курс по Python ООП',
-    'Подробный курс по Python ООР',
-    'D:/videos/python_oop.mp4',
+    "Курс по Python ООП",
+    "Подробный курс по Python ООР",
+    "D:/videos/python_oop.mp4",
 )
 
 print(v.rating.rating)  # 0

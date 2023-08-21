@@ -8,8 +8,8 @@ class HandlerGET:
 
     def get(self, func: Callable, request, *args, **kwargs):
         return_str = func(request)
-        method = request.get('method', 'GET')
-        if method == 'GET':
+        method = request.get("method", "GET")
+        if method == "GET":
             return f"GET: {return_str}"
         return None
 
@@ -21,12 +21,17 @@ class HandlerGET:
 def index(request):
     return "главная страница сайта"
 
+
 res = index({"method": "GET"})
-assert res == "GET: главная страница сайта", "декорированная функция вернула неверные данные"
+assert (
+    res == "GET: главная страница сайта"
+), "декорированная функция вернула неверные данные"
 res = index({"method": "POST"})
 assert res is None, "декорированная функция вернула неверные данные"
 res = index({"method": "POST2"})
 assert res is None, "декорированная функция вернула неверные данные"
 
 res = index({})
-assert res == "GET: главная страница сайта", "декорированная функция вернула неверные данные"
+assert (
+    res == "GET: главная страница сайта"
+), "декорированная функция вернула неверные данные"

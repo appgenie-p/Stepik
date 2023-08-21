@@ -2,13 +2,14 @@ class WindowDlg:
     """
     wnd = WindowDlg(заголовок окна, ширина, высота)
     """
+
     def __init__(self, title: str, width: int, height: int) -> None:
         self.__title: str = title
         self.__width: int = width
         self.__height: int = height
 
     def show(self):
-        return f'{self.__title}: {self.width}, {self.height}'
+        return f"{self.__title}: {self.width}, {self.height}"
 
     @property
     def width(self) -> int:

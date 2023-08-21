@@ -28,16 +28,14 @@ class Furniture:
         if not isinstance(weight, (int, float)):
             raise TypeError("Weight must be a number")
 
-    def __validate_name_and_weight_values(
-        self, __name: str, __value: Any
-    ) -> None:
+    def __validate_name_and_weight_values(self, __name: str, __value: Any) -> None:
         if __name == "_name":
             self.__verify_name(__value)
         if __name == "_weight":
             self.__verify_weight(__value)
 
     def get_attrs(self) -> Tuple[Any]:
-        return tuple(attr for attr in vars(self) if attr.startswith('_'))
+        return tuple(attr for attr in vars(self) if attr.startswith("_"))
 
 
 class Closet(Furniture):

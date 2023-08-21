@@ -13,7 +13,7 @@ class Validator:
 
     def __call__(self, data: int | float) -> int | float:
         if not self._is_valid(data):
-            raise ValueError('данные не прошли валидацию')
+            raise ValueError("данные не прошли валидацию")
         return data
 
 

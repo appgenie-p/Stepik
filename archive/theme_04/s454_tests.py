@@ -8,7 +8,7 @@ PositiveNumber = Union[int, float]
 
 @pytest.fixture
 def shop_item():
-    return ShopItem('apple', 0.5, 1.0)
+    return ShopItem("apple", 0.5, 1.0)
 
 
 def test_get_id(shop_item):
@@ -16,7 +16,7 @@ def test_get_id(shop_item):
 
 
 def test_name(shop_item):
-    assert shop_item._name == 'apple'
+    assert shop_item._name == "apple"
 
 
 def test_weight(shop_item):
@@ -28,6 +28,6 @@ def test_price(shop_item):
 
 
 def test_id_uniqueness():
-    item1 = ShopItem('apple', 0.5, 1.0)
-    item2 = ShopItem('banana', 0.3, 0.5)
+    item1 = ShopItem("apple", 0.5, 1.0)
+    item2 = ShopItem("banana", 0.3, 0.5)
     assert item1.get_id() != item2.get_id()

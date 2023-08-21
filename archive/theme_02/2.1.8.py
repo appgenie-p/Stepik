@@ -26,8 +26,8 @@ class Rectangle:
 
     def draw(self):
         print(
-            f'Прямоугольник с координатами: {self.__sp.get_coords()}'
-            f' {self.__ep.get_coords()}'
+            f"Прямоугольник с координатами: {self.__sp.get_coords()}"
+            f" {self.__ep.get_coords()}"
         )
 
 

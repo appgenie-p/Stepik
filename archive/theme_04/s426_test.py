@@ -22,7 +22,7 @@ def test_tuple_addition_1():
     t = Tuple([1, 2, 3])
     t = t + "Python"
     t = t + "P"
-    assert t == (1, 2, 3, 'P', 'y', 't', 'h', 'o', 'n', 'P')
+    assert t == (1, 2, 3, "P", "y", "t", "h", "o", "n", "P")
     assert type(t) == Tuple
     t = (t + "Python") + "ООП"
     assert type(t) == Tuple

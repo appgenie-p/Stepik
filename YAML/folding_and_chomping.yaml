@@ -4,8 +4,8 @@
 multi-line: |+
   Some silly text across multiple lines,
   very important to include some white space:
-  
-  And some 
+
+  And some
     more indentation
   And some trailing newlines.
 

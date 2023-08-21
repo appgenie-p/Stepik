@@ -1,6 +1,6 @@
 class Car:
     def __init__(self) -> None:
-        self.__model: str = ''
+        self.__model: str = ""
 
     @property
     def model(self):

@@ -1,7 +1,7 @@
 class Ellipse:
     """Ellipse class"""
 
-    def __init__(self,*args):
+    def __init__(self, *args):
         """Initialize attributes"""
         if args:
             self.x1, self.y1, self.x2, self.y2 = args
@@ -12,7 +12,7 @@ class Ellipse:
 
     def get_coords(self) -> tuple:
         if not self:
-            raise AttributeError('нет координат для извлечения')
+            raise AttributeError("нет координат для извлечения")
         return self.x1, self.y1, self.x2, self.y2
 
 

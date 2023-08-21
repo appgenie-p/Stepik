@@ -54,9 +54,7 @@ class TicTacToe:
         cells_filled: bool = all(
             cell.value != self.FREE_CELL for raw in self.pole for cell in raw
         )
-        return (
-            cells_filled and not self.is_human_win and not self.is_computer_win
-        )
+        return cells_filled and not self.is_human_win and not self.is_computer_win
 
     def _check_game_result(self, mark) -> bool:
         """Check if human won the game."""
@@ -83,7 +81,7 @@ class TicTacToe:
         for raw in self.pole:
             for cell in raw:
                 print(lookup[cell.value], end=" ")
-            print('\n')
+            print("\n")
 
     def human_go(self):
         """Ask human to make a move and enter coordinates of the cell."""
@@ -123,18 +121,16 @@ if __name__ == "__main__":
     assert (
         cell.value == 0
     ), "начальное значение атрибута value объекта класса Cell должно быть равно 0"
-    assert bool(
-        cell
-    ), "функция bool для объекта класса Cell вернула неверное значение"
+    assert bool(cell), "функция bool для объекта класса Cell вернула неверное значение"
     cell.value = 1
     assert (
         bool(cell) == False
     ), "функция bool для объекта класса Cell вернула неверное значение"
 
     assert (
-        hasattr(TicTacToe, 'show')
-        and hasattr(TicTacToe, 'human_go')
-        and hasattr(TicTacToe, 'computer_go')
+        hasattr(TicTacToe, "show")
+        and hasattr(TicTacToe, "human_go")
+        and hasattr(TicTacToe, "computer_go")
     ), "класс TicTacToe должен иметь методы show, human_go, computer_go"
 
     game = TicTacToe()
@@ -177,9 +173,7 @@ if __name__ == "__main__":
     game[1, 1] = TicTacToe.HUMAN_X
     game[2, 2] = TicTacToe.HUMAN_X
     assert (
-        game.is_human_win
-        and game.is_computer_win == False
-        and game.is_draw == False
+        game.is_human_win and game.is_computer_win == False and game.is_draw == False
     ), "некорректно пересчитываются атрибуты is_human_win, is_computer_win, is_draw. Возможно не пересчитывается статус игры в момент присвоения новых значения по индексам: game[i, j] = value"
 
     game.init()
@@ -187,7 +181,5 @@ if __name__ == "__main__":
     game[1, 0] = TicTacToe.COMPUTER_O
     game[2, 0] = TicTacToe.COMPUTER_O
     assert (
-        game.is_human_win == False
-        and game.is_computer_win
-        and game.is_draw == False
+        game.is_human_win == False and game.is_computer_win and game.is_draw == False
     ), "некорректно пересчитываются атрибуты is_human_win, is_computer_win, is_draw. Возможно не пересчитывается статус игры в момент присвоения новых значения по индексам: game[i, j] = value"

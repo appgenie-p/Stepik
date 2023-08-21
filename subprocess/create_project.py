@@ -2,6 +2,7 @@ from argparse import ArgumentParser
 from pathlib import Path
 import subprocess
 
+
 def create_new_project(name):
     project_folder = Path.cwd().absolute() / name
     project_folder.mkdir()

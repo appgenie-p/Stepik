@@ -9,18 +9,14 @@ class SellItem:
 
 
 class Flat(SellItem):
-    def __init__(
-        self, name: str, price: Number, size: Number, rooms: int
-    ) -> None:
+    def __init__(self, name: str, price: Number, size: Number, rooms: int) -> None:
         super().__init__(name, price)
         self.size = size
         self.rooms = rooms
 
 
 class House(SellItem):
-    def __init__(
-        self, name: str, price: Number, material: str, square: Number
-    ) -> None:
+    def __init__(self, name: str, price: Number, material: str, square: Number) -> None:
         super().__init__(name, price)
         self.material = material
         self.square = square

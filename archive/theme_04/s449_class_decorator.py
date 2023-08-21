@@ -2,8 +2,8 @@ from typing import Any, Callable, List, ParamSpec, Type, TypeVar
 
 vector_log: List[str] = []
 
-T = TypeVar('T', bound="Vector")
-P = ParamSpec('P')
+T = TypeVar("T", bound="Vector")
+P = ParamSpec("P")
 Logs = List[str]
 
 

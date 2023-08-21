@@ -7,10 +7,10 @@ class TriangleListIterator:
 
 
 lst = [
-    ['x00', 'x01', 'x02'],
-    ['x10', 'x11'],
-    ['x20', 'x21', 'x22', 'x23', 'x24'],
-    ['x30', 'x31', 'x32', 'x33'],
+    ["x00", "x01", "x02"],
+    ["x10", "x11"],
+    ["x20", "x21", "x22", "x23", "x24"],
+    ["x30", "x31", "x32", "x33"],
 ]
 
 it = TriangleListIterator(lst)

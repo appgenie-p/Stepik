@@ -21,10 +21,10 @@ class Dog(Animal):
     def __init__(self, name: str, old: int, breed: str, size: Size) -> None:
         super().__init__(name, old)
         self.breed, self.size = breed, size
-    
+
     def get_info(self):
         return f"{self.name}: {self.old}, {self.breed}, {self.size}"
-    
 
-cat = Cat('кот', 4, 'black', 2.25)
-dog = Dog('пёс', 4, 'хаски', (2, 3))
+
+cat = Cat("кот", 4, "black", 2.25)
+dog = Dog("пёс", 4, "хаски", (2, 3))

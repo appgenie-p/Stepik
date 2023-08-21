@@ -3,7 +3,7 @@ from typing import Any, Callable, List, Type, TypeVar
 
 vector_log: List[str] = []
 
-T = TypeVar('T', bound="Vector")
+T = TypeVar("T", bound="Vector")
 Logs = List[str]
 
 

@@ -7,8 +7,9 @@ class Book:
 
 
 class DigitBook(Book):
-    def __init__(self, title: str, author: str, pages: int, year: int,
-                 size: int, frm: str):
+    def __init__(
+        self, title: str, author: str, pages: int, year: int, size: int, frm: str
+    ):
         super().__init__(title, author, pages, year)
         self.size = size
         self.frm = frm

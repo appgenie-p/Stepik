@@ -41,8 +41,6 @@ def test_temperature_observer(
 
     captured: Any = capfd.readouterr()
     expected_output = (
-        "Текущая температура 23\n"
-        "Текущее давление 150\n"
-        "Текущая влажность 83\n"
+        "Текущая температура 23\n" "Текущее давление 150\n" "Текущая влажность 83\n"
     )
     assert captured.out == expected_output

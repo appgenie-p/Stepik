@@ -31,21 +31,21 @@ class Vector:
 
     def __imul__(self, other):
         return self.main_exec(other, op.mul, False)
-    
+
     def __len__(self):
         return len(self.args)
-    
+
     def __str__(self) -> str:
         return str(self.args)
-    
+
     def check_len(self, other):
         if len(self) != len(other):
-            raise ArithmeticError('размерности векторов не совпадают')
+            raise ArithmeticError("размерности векторов не совпадают")
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
             return self.args == other.args
-        raise TypeError('Сравнение векторов не возможно!')
+        raise TypeError("Сравнение векторов не возможно!")
 
 
 v1 = Vector(1, 2, 3)

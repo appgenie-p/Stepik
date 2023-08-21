@@ -7,7 +7,7 @@ class ListInteger(list):
     @staticmethod
     def __check_val(val):
         if type(val) != int:
-            raise TypeError('можно передавать только целочисленные значения')
+            raise TypeError("можно передавать только целочисленные значения")
 
     def __setitem__(self, index, value):
         self.__check_val(value)

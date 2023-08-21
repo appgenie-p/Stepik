@@ -63,9 +63,9 @@ class NetworkIterator:
 
 
 nt = Input(12)
-layer: Dense = nt(Dense(nt.inputs, 1024, 'relu'))
-layer = layer(Dense(layer.inputs, 2048, 'relu'))
-layer = layer(Dense(layer.inputs, 10, 'softmax'))
+layer: Dense = nt(Dense(nt.inputs, 1024, "relu"))
+layer = layer(Dense(layer.inputs, 2048, "relu"))
+layer = layer(Dense(layer.inputs, 10, "softmax"))
 
 n = 0
 for x in NetworkIterator(network=nt):

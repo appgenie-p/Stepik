@@ -26,7 +26,7 @@ lst_in = list(map(str.strip, sys.stdin.readlines()))
 
 lst_bs = [
     BookStudy(name, author, int(year))
-    for name, author, year in (line.split(';') for line in lst_in)
+    for name, author, year in (line.split(";") for line in lst_in)
 ]
 
 unique_books = len(set(lst_bs))

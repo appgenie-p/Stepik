@@ -20,23 +20,19 @@ class Dimensions:
 
     def __setattr__(self, name, value):
         if value < 0:
-            raise ValueError(
-                "габаритные размеры должны быть положительными числами"
-            )
+            raise ValueError("габаритные размеры должны быть положительными числами")
         super().__setattr__(name, value)
 
     def __repr__(self):
         return self.hash()
 
 
-if 'test' in locals():
+if "test" in locals():
     s_inp = "1 2 3; 4 5 6.78; 1 2 3; 3 1 2.5"
 else:
     s_inp = input()
 
 
-lst_dims = [
-    Dimensions(*(float(x) for x in line.split())) for line in s_inp.split("; ")
-]
+lst_dims = [Dimensions(*(float(x) for x in line.split())) for line in s_inp.split("; ")]
 
 lst_dims.sort(key=hash)

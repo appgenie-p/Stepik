@@ -2,18 +2,18 @@ from typing import Optional
 
 
 class StackObj:
-    __slots__ = ('data', 'next')
+    __slots__ = ("data", "next")
 
     def __init__(self, data: str):
         self.data: str = data
-        self.next: Optional['StackObj'] = None
+        self.next: Optional["StackObj"] = None
 
     def __repr__(self):
-        return f'StackObj({self.data})'
+        return f"StackObj({self.data})"
 
 
 class Stack:
-    __slots__ = ('top',)
+    __slots__ = ("top",)
 
     def __init__(self):
         self.top = None
@@ -33,7 +33,7 @@ class Stack:
 
     def _get_object_by_index(self, index):
         if type(index) != int or not 0 <= index < len(self):
-            raise IndexError('индекс выходит за пределы стека')
+            raise IndexError("индекс выходит за пределы стека")
         current = self.top
         for _ in range(index):
             current = current.next

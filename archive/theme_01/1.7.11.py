@@ -2,22 +2,22 @@ class Viber:
     MSGS: list = []
 
     @classmethod
-    def add_message(cls, msg: 'Message') -> None:
+    def add_message(cls, msg: "Message") -> None:
         cls.MSGS.append(msg)
 
     @classmethod
-    def remove_message(cls, msg: 'Message') -> None:
+    def remove_message(cls, msg: "Message") -> None:
         try:
             cls.MSGS.remove(msg)
         except ValueError:
-            print('There is no such a message')
+            print("There is no such a message")
 
     @classmethod
-    def set_like(cls, msg: 'Message') -> None:
+    def set_like(cls, msg: "Message") -> None:
         try:
             indx = cls.MSGS.index(msg)
         except ValueError:
-            print('There is no such a message')
+            print("There is no such a message")
         cls.MSGS[indx].fl_like = not cls.MSGS[indx].fl_like
 
     @classmethod

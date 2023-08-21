@@ -1,4 +1,3 @@
-
 import re
 import sys
 
@@ -13,7 +12,10 @@ pattern = re.compile(
         \s?(?P<START>\d+)?
         \s(?P<INC>\d+)?
         \s(?P<END>\d+)$
-    """, re.VERBOSE)
+    """,
+    re.VERBOSE,
+)
+
 
 def main():
     """Increase start for increment val till the end.
@@ -28,22 +30,20 @@ def main():
         print(USAGE)
         return
 
-    args_passed = {
-        k: v for k, v in pattern.match(args_str).groupdict().items() if v}
-    
+    args_passed = {k: v for k, v in pattern.match(args_str).groupdict().items() if v}
+
     help_full = args_passed.get("HELP")
     help_min = args_passed.get("H")
     start = int(args_passed.get("START", START))
     inc = int(args_passed.get("INC", INC))
     end = int(args_passed.get("END", END))
-    
+
     if help_full or help_min:
         print(USAGE)
         return
 
     for i in range(start, end + 1, inc):
         print(i)
-
 
 
 if __name__ == "__main__":

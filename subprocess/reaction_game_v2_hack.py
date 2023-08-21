@@ -1,5 +1,6 @@
 import subprocess
 
+
 def get_char(process):
     character = process.stdout.read1(1)
     print(
@@ -9,10 +10,12 @@ def get_char(process):
     )
     return character.decode("utf-8")
 
+
 def search_for_output(strings, process):
     buffer = ""
     while not any(string in buffer for string in strings):
         buffer = buffer + get_char(process)
+
 
 with subprocess.Popen(
     [

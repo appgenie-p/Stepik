@@ -3,13 +3,13 @@ from typing import Any
 
 class Router:
     def __init__(self) -> None:
-        self.buffer: list['Data'] = []
-        self.linked_servers: list['Server'] = []
+        self.buffer: list["Data"] = []
+        self.linked_servers: list["Server"] = []
 
-    def link(self, server: 'Server'):
+    def link(self, server: "Server"):
         self.linked_servers.append(server)
 
-    def unlink(self, server: 'Server'):
+    def unlink(self, server: "Server"):
         self.linked_servers.remove(server)
 
     def send_data(self):
@@ -33,12 +33,12 @@ class Server:
         return instance
 
     def __init__(self) -> None:
-        self.buffer: list['Data'] = []
+        self.buffer: list["Data"] = []
 
-    def send_data(self, data: 'Data') -> None:
+    def send_data(self, data: "Data") -> None:
         router.buffer.append(data)
 
-    def get_data(self) -> list['Data'] | list[Any]:
+    def get_data(self) -> list["Data"] | list[Any]:
         packets_received = self.buffer[:]
         self.buffer.clear()
         return packets_received
@@ -50,10 +50,10 @@ class Server:
 class Data:
     def __init__(self, data: str, ip: int) -> None:
         self.data = data
-        self.ip = ip        # IP-адрес назначения
+        self.ip = ip  # IP-адрес назначения
 
     def __str__(self) -> str:
-        return f'{self.data}'
+        return f"{self.data}"
 
 
 router = Router()
@@ -71,4 +71,3 @@ sv_to.send_data(Data("Hi", sv_from.get_ip()))
 router.send_data()
 msg_lst_from = sv_from.get_data()
 msg_lst_to = sv_to.get_data()
-

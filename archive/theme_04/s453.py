@@ -1,7 +1,7 @@
 class Student:
     def __init__(self, fio, group):
         self._fio = fio  # ФИО студента (строка)
-        self._group = group     # группа (строка)
+        self._group = group  # группа (строка)
         self._lect_marks = []  # оценки за лекции
         self._house_marks = []  # оценки за домашние задания
 

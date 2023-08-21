@@ -2,10 +2,10 @@ class InputValues:
     def __init__(self, render):
         self.render = render
 
-    def __call__(self, func):     # func - ссылка на декорируемую функцию
+    def __call__(self, func):  # func - ссылка на декорируемую функцию
         def wrapper(*args, **kwargs):
-            return [self.render(digit)
-                    for digit in func(*args, **kwargs).split()]
+            return [self.render(digit) for digit in func(*args, **kwargs).split()]
+
         return wrapper
 
 
@@ -23,6 +23,7 @@ render = RenderDigit()
 # @InputValues(render)
 def input_dg(string):
     return string
+
 
 r = InputValues(RenderDigit())(input_dg)("123 rrr 555")
 

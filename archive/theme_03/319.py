@@ -15,8 +15,10 @@ class Dimensions:
 
     @classmethod
     def checker(cls, num):
-        return (cls.MIN_DIMENSION <= num <= cls.MAX_DIMENSION
-                and type(num) in (int, float))
+        return cls.MIN_DIMENSION <= num <= cls.MAX_DIMENSION and type(num) in (
+            int,
+            float,
+        )
 
     @a.setter
     def a(self, val):
@@ -42,7 +44,7 @@ class Dimensions:
             self.__c = val
 
     def __setattr__(self, __name, __value) -> None:
-        prohibited_names = ('MIN_DIMENSION', 'MAX_DIMENSION')
+        prohibited_names = ("MIN_DIMENSION", "MAX_DIMENSION")
         if __name in prohibited_names:
             raise AttributeError(
                 "Менять атрибуты MIN_DIMENSION и MAX_DIMENSION запрещено."

@@ -2,9 +2,7 @@ from typing import List, Dict
 import re
 import sys
 
-USAGE = (
-    f"Usage: {sys.argv[0]} [-s <separator>] [first [increment]] last"
-)
+USAGE = f"Usage: {sys.argv[0]} [-s <separator>] [first [increment]] last"
 
 args_pattern = re.compile(
     r"""
@@ -17,12 +15,13 @@ args_pattern = re.compile(
     re.VERBOSE,
 )
 
+
 def parse(arg_line: str) -> Dict[str, str]:
     args: Dict[str, str] = {}
     if match_object := args_pattern.match(arg_line):
-        args = {k: v for k, v in match_object.groupdict().items()
-                if v is not None}
+        args = {k: v for k, v in match_object.groupdict().items() if v is not None}
     return args
+
 
 def seq(operands: List[int], sep: str = "\n") -> str:
     first, increment, last = 1, 1, 1
@@ -37,6 +36,7 @@ def seq(operands: List[int], sep: str = "\n") -> str:
     last = last + 1 if increment > 0 else last - 1
     return sep.join(str(i) for i in range(first, last, increment))
 
+
 def main() -> None:
     args = parse(" ".join(sys.argv[1:]))
     if not args:
@@ -47,6 +47,7 @@ def main() -> None:
     operands = [int(v) for k, v in args.items() if k.startswith("OP")]
     sep = args.get("SEP", "\n")
     print(seq(operands, sep))
+
 
 if __name__ == "__main__":
     main()

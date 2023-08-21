@@ -2,13 +2,15 @@ import re
 from typing import List, Sequence
 
 
-stich = ["Я к вам пишу – чего же боле?",
-        "Что я могу еще сказать?",
-        "Теперь, я знаю, в вашей воле",
-        "Меня презреньем наказать.",
-        "Но вы, к моей несчастной доле",
-        "Хоть каплю жалости храня,",
-        "Вы не оставите меня."]
+stich = [
+    "Я к вам пишу – чего же боле?",
+    "Что я могу еще сказать?",
+    "Теперь, я знаю, в вашей воле",
+    "Меня презреньем наказать.",
+    "Но вы, к моей несчастной доле",
+    "Хоть каплю жалости храня,",
+    "Вы не оставите меня.",
+]
 
 
 class StringText:
@@ -21,10 +23,10 @@ class StringText:
     def __len__(self) -> int:
         return len(self.lst_words)
 
-    def __gt__(self, comparable: 'StringText') -> bool:
+    def __gt__(self, comparable: "StringText") -> bool:
         return len(self) > len(comparable)
-    
-    def __ge__(self, comparable: 'StringText') -> bool:
+
+    def __ge__(self, comparable: "StringText") -> bool:
         return len(self) >= len(comparable)
 
 
@@ -33,8 +35,11 @@ for string in stich:
     raw_words = string.split()
     lst_text.append(
         StringText(
-            [re.sub(r"[?!,.;–]", '', word) for word in raw_words 
-            if len(re.sub(r"[?!,.;–]", '', word)) > 0]
+            [
+                re.sub(r"[?!,.;–]", "", word)
+                for word in raw_words
+                if len(re.sub(r"[?!,.;–]", "", word)) > 0
+            ]
         )
     )
 

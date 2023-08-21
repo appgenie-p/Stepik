@@ -33,10 +33,10 @@ class DataBase:
         self.dict_db: dict[Record, Set[Record]] = defaultdict(set)
         self.pk_dict: dict[int, Record] = {}
 
-    def read(self, pk: int) -> Union['Record', None]:
+    def read(self, pk: int) -> Union["Record", None]:
         return self.pk_dict.get(pk)
 
-    def write(self, record: 'Record') -> None:
+    def write(self, record: "Record") -> None:
         self.dict_db[record].add(record)
         self.pk_dict[record.pk] = record
 
@@ -51,10 +51,10 @@ lst_in = list(map(str.strip, sys.stdin.readlines()))
 #     'Балакирев С.М.; преподаватель; 33',
 # ]
 
-db = DataBase('db.txt')
+db = DataBase("db.txt")
 
 for line in lst_in:
-    fio, description, old = line.split(';')
+    fio, description, old = line.split(";")
     try:
         record = Record(fio, description, int(old))
     except ValueError:

@@ -3,10 +3,10 @@ from typing import List, Optional
 
 class LinkedList:
     def __init__(self) -> None:
-        self.head: 'ObjList' = None
-        self.tail: 'ObjList' = None
+        self.head: "ObjList" = None
+        self.tail: "ObjList" = None
 
-    def add_obj(self, obj: 'ObjList') -> None:
+    def add_obj(self, obj: "ObjList") -> None:
         """добавление нового объекта obj класса ObjList в конец связного
         списка
         """
@@ -47,8 +47,8 @@ class LinkedList:
         while obj is not None:
             objs.append(obj.get_data())
             obj = obj.get_next()
-        objs.append('None')
-        return ' -> '.join(objs)
+        objs.append("None")
+        return " -> ".join(objs)
 
 
 class ObjList:
@@ -57,16 +57,16 @@ class ObjList:
         self.__prev: ObjList = None
         self.__data: str = data
 
-    def set_next(self, obj: 'ObjList') -> None:
+    def set_next(self, obj: "ObjList") -> None:
         self.__next = obj
 
-    def set_prev(self, obj: 'ObjList') -> None:
+    def set_prev(self, obj: "ObjList") -> None:
         self.__prev = obj
 
-    def get_next(self) -> 'ObjList':
+    def get_next(self) -> "ObjList":
         return self.__next
 
-    def get_prev(self) -> 'ObjList':
+    def get_prev(self) -> "ObjList":
         return self.__prev
 
     def set_data(self, data: str) -> None:
@@ -76,7 +76,7 @@ class ObjList:
         return self.__data
 
     def __repr__(self) -> str:
-        return f'{self.__data}'
+        return f"{self.__data}"
 
 
 lst = LinkedList()
@@ -85,6 +85,6 @@ lst.add_obj(ObjList("данные 2"))
 lst.add_obj(ObjList("данные 3"))
 lst.add_obj(ObjList("данные 4"))
 lst.remove_obj()
-res = lst.get_data()    # ['данные 1', 'данные 2', 'данные 3']
+res = lst.get_data()  # ['данные 1', 'данные 2', 'данные 3']
 print(res)
 print(lst)

@@ -3,11 +3,13 @@
 >>> clock.get_time()
 4530
 """
+
+
 class Clock:
     def __init__(self) -> None:
         self.time: int = 0
 
-    def set_time(self, tm: int) -> None:        
+    def set_time(self, tm: int) -> None:
         if self.check_time(tm):
             self.time = tm
 
@@ -23,4 +25,5 @@ clock.set_time(4530)
 
 if __name__ == "__main__":
     import doctest
+
     doctest.testmod()

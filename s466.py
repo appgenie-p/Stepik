@@ -48,9 +48,7 @@ class GeneralView:
 
     def _if_request_method_not_allowed_raise_type_error(self):
         if self._request_method not in self.allowed_methods:
-            raise TypeError(
-                f"Метод {self._request.get('method')} не разрешен."
-            )
+            raise TypeError(f"Метод {self._request.get('method')} не разрешен.")
 
 
 class DetailView(RetriveMixin, GeneralView):

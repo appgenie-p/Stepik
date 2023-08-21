@@ -27,43 +27,41 @@ v1 != v2 # True, если хотя бы одна пара координат в�
 raise ArithmeticError('размерности векторов не совпадают')
 """
 
+
 class Vector:
     def __init__(self, *args):
         self.args = args
 
     def __add__(self, other):
         self.check_len(other)  # проверка размерностей векторов
-        return Vector(*[self.args[i] + other.args[i]
-                        for i in range(len(self.args))])
+        return Vector(*[self.args[i] + other.args[i] for i in range(len(self.args))])
 
     def __sub__(self, other):
         self.check_len(other)  # проверка размерностей векторов
-        return Vector(*[self.args[i] - other.args[i]
-                        for i in range(len(self.args))])
+        return Vector(*[self.args[i] - other.args[i] for i in range(len(self.args))])
 
     def __mul__(self, other):
         self.check_len(other)  # проверка размерностей векторов
-        return Vector(*[self.args[i] * other.args[i]
-                        for i in range(len(self.args))])
+        return Vector(*[self.args[i] * other.args[i] for i in range(len(self.args))])
 
     def __iadd__(self, other):
         if isinstance(other, int):
-            self.args = tuple([self.args[i] + other
-                               for i in range(len(self.args))])
+            self.args = tuple([self.args[i] + other for i in range(len(self.args))])
         else:
             self.check_len(other)  # проверка размерностей векторов
-            self.args = tuple([self.args[i] + other.args[i]
-                              for i in range(len(self.args))])
+            self.args = tuple(
+                [self.args[i] + other.args[i] for i in range(len(self.args))]
+            )
         return self
 
     def __isub__(self, other):
         if isinstance(other, int):
-            self.args = tuple([self.args[i] - other
-                               for i in range(len(self.args))])
+            self.args = tuple([self.args[i] - other for i in range(len(self.args))])
         else:
             self.check_len(other)  # проверка размерностей векторов
-            self.args = tuple([self.args[i] - other.args[i]
-                              for i in range(len(self.args))])
+            self.args = tuple(
+                [self.args[i] - other.args[i] for i in range(len(self.args))]
+            )
         return self
 
     def __eq__(self, other):
@@ -79,7 +77,7 @@ class Vector:
 
     def check_len(self, other):
         if len(self.args) != len(other.args):
-            raise ArithmeticError('размерности векторов не совпадают')
+            raise ArithmeticError("размерности векторов не совпадают")
         return True
 
 

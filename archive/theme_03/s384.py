@@ -23,7 +23,7 @@ class Number:
 
 class Integer(Number):
     TYPE = numbers.Integral
-    ERROR = 'должно быть целое число'
+    ERROR = "должно быть целое число"
 
 
 # ar = Array(max_length, cell)
@@ -34,7 +34,7 @@ class Array:
 
     def _index_check(self, index):
         if index >= len(self.array):
-            raise IndexError('некорректный индекс')
+            raise IndexError("некорректный индекс")
 
     def __getitem__(self, index: int) -> Integer:
         self._index_check(index)
@@ -45,5 +45,4 @@ class Array:
         self.array[index].value = value
 
     def __repr__(self):
-        return ' '.join([str(i) for i in self.array])
-
+        return " ".join([str(i) for i in self.array])

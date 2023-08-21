@@ -1,6 +1,6 @@
 from typing import Any, Generic, List, SupportsIndex, TypeVar, Union, overload
 
-_T = TypeVar('_T')
+_T = TypeVar("_T")
 
 
 class SoftList(List[Any], Generic[_T]):

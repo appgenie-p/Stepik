@@ -2,9 +2,7 @@ from typing import Union
 
 
 class Body:
-    def __init__(
-        self, name: str, ro: Union[int, float], volume: Union[int, float]
-    ):
+    def __init__(self, name: str, ro: Union[int, float], volume: Union[int, float]):
         self.name = name
         self.ro = ro
         self.volume = volume

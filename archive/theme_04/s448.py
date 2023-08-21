@@ -26,9 +26,7 @@ class Aircraft:
     speed = PositiveNumberDescriptor["T"]()
     top = PositiveNumberDescriptor["T"]()
 
-    def __init__(
-        self, model: str, mass: Numbers, speed: Numbers, top: Numbers
-    ):
+    def __init__(self, model: str, mass: Numbers, speed: Numbers, top: Numbers):
         self.model = model
         self.mass = mass
         self.speed = speed
@@ -101,8 +99,8 @@ class WarPlane(Aircraft):
 
 
 planes = [
-    PassengerAircraft('МС-21', 1250, 8000, 12000.5, 140),
-    PassengerAircraft('SuperJet', 1145, 8640, 11034, 80),
-    WarPlane('Миг-35', 7034, 25000, 2000, {"ракета": 4, "бомба": 10}),
-    WarPlane('Су-35', 7034, 34000, 2400, {"ракета": 4, "бомба": 7}),
+    PassengerAircraft("МС-21", 1250, 8000, 12000.5, 140),
+    PassengerAircraft("SuperJet", 1145, 8640, 11034, 80),
+    WarPlane("Миг-35", 7034, 25000, 2000, {"ракета": 4, "бомба": 10}),
+    WarPlane("Су-35", 7034, 34000, 2400, {"ракета": 4, "бомба": 7}),
 ]

@@ -11,7 +11,7 @@ class RandomPassword:
 
     def __call__(self, *args: Any, **kwds: Any) -> Any:
         pswd_len = randint(self.min_length, self.max_length)
-        return ''.join(choices(self.psw_chars, k=pswd_len))
+        return "".join(choices(self.psw_chars, k=pswd_len))
 
 
 min_length = 5

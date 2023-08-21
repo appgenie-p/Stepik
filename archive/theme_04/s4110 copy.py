@@ -38,9 +38,7 @@ class Vector:
 
         constructor = self.constructor(other)
 
-        return constructor(
-            *[operator(x, y) for x, y in zip(self.coords, other.coords)]
-        )
+        return constructor(*[operator(x, y) for x, y in zip(self.coords, other.coords)])
 
     def constructor(self, other: "Vector") -> Type["Vector"]:
         if self.__class__ == other.__class__:

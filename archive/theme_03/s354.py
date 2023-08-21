@@ -60,10 +60,10 @@ class ShopItem:
         return f"name: {self.name} vol: {self.dim.c}"
 
 
-trainers = ShopItem('кеды', 1024, Dimensions(40, 30, 120))
-umbrella = ShopItem('зонт', 500.24, Dimensions(10, 20, 50))
-fridge = ShopItem('холодильник', 40000, Dimensions(2000, 600, 500))
-chair = ShopItem('табуретка', 2000.99, Dimensions(500, 200, 200))
+trainers = ShopItem("кеды", 1024, Dimensions(40, 30, 120))
+umbrella = ShopItem("зонт", 500.24, Dimensions(10, 20, 50))
+fridge = ShopItem("холодильник", 40000, Dimensions(2000, 600, 500))
+chair = ShopItem("табуретка", 2000.99, Dimensions(500, 200, 200))
 
 lst_shop = (trainers, umbrella, fridge, chair)
 lst_shop_sorted = sorted(lst_shop, key=lambda x: x.dim)
@@ -72,12 +72,12 @@ lst_shop_sorted = sorted(lst_shop, key=lambda x: x.dim)
 assert len(lst_shop) == 4, "число элементов в lst_shop не равно 4"
 
 lst_sp = []
-lst_sp.append(ShopItem('кеды', 1024, Dimensions(40, 30, 120)))
-lst_sp.append(ShopItem('зонт', 500.24, Dimensions(10, 20, 50)))
-lst_sp.append(ShopItem('холодильник', 40000, Dimensions(2000, 600, 500)))
-lst_sp.append(ShopItem('табуретка', 2000.99, Dimensions(500, 200, 200)))
+lst_sp.append(ShopItem("кеды", 1024, Dimensions(40, 30, 120)))
+lst_sp.append(ShopItem("зонт", 500.24, Dimensions(10, 20, 50)))
+lst_sp.append(ShopItem("холодильник", 40000, Dimensions(2000, 600, 500)))
+lst_sp.append(ShopItem("табуретка", 2000.99, Dimensions(500, 200, 200)))
 
-lst_sp_sorted = ['зонт', 'кеды', 'табуретка', 'холодильник']
+lst_sp_sorted = ["зонт", "кеды", "табуретка", "холодильник"]
 s = [x.name for x in lst_shop_sorted]
 assert lst_sp_sorted == s, "список lst_shop_sorted сформирован неверно"
 

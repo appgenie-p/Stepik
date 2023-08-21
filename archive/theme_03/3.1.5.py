@@ -7,8 +7,7 @@ class LessonItem:
     def __setattr__(self, key, val) -> None:
         val_type = self.__init__.__annotations__.get(key)
         if isinstance(val, val_type):
-            if ((key == 'practices' or key == 'duration')
-                    and val <= 0):
+            if (key == "practices" or key == "duration") and val <= 0:
                 raise TypeError("Неверный тип присваиваемых данных.")
             else:
                 super().__setattr__(key, val)
@@ -19,7 +18,7 @@ class LessonItem:
         return False
 
     def __delattr__(self, __name: str) -> None:
-        keys = ('title', 'practices', 'duration')
+        keys = ("title", "practices", "duration")
         if __name in keys:
             return
         super().__delattr__(__name)

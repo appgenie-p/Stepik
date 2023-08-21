@@ -43,6 +43,6 @@ class ElBook(Thing):
 
 
 table = Table("Круглый", 1024, 812.55, (700, 750, 700))
-book = ElBook("Python ООП", 2000, 2048, 'pdf')
+book = ElBook("Python ООП", 2000, 2048, "pdf")
 print(table.get_data())
 print(book.get_data())

@@ -8,18 +8,18 @@ class RadiusVector:
     vector = RadiusVector(1, -5, 3.4, 10)
     (координаты - любые целые или вещественные числа)
     """
+
     Coord = Union[int, float]
 
     def __init__(self, *args: Coord) -> None:
         len_args = len(args)
         first_arg = args[0]
         if len_args == 1 and (first_arg < 1 or type(first_arg) != int):
-            raise Exception('Единственны аргумент д.б. int и больше 0')
-        self.coords = ([0] * first_arg if len_args == 1
-                       else [coord for coord in args])
+            raise Exception("Единственны аргумент д.б. int и больше 0")
+        self.coords = [0] * first_arg if len_args == 1 else [coord for coord in args]
 
     def set_coords(self, *coord):
-        self.coords = list(coord[:len(self.coords)]) + self.coords[len(coord):]
+        self.coords = list(coord[: len(self.coords)]) + self.coords[len(coord) :]
 
     def get_coords(self) -> Tuple[Coord, ...]:
         """для получения текущих координат радиус-вектора (в виде кортежа)"""
@@ -41,7 +41,11 @@ class RadiusVector:
 vector3D = RadiusVector(3)
 vector3D.set_coords(3, -5.6, 8)
 a, b, c = vector3D.get_coords()
-vector3D.set_coords(3, -5.6, 8, 10, 11) # ошибки быть не должно, последние две координаты игнорируются
-vector3D.set_coords(1, 2) # ошибки быть не должно, меняются только первые две координаты
-res_len = len(vector3D) # res_len = 3
+vector3D.set_coords(
+    3, -5.6, 8, 10, 11
+)  # ошибки быть не должно, последние две координаты игнорируются
+vector3D.set_coords(
+    1, 2
+)  # ошибки быть не должно, меняются только первые две координаты
+res_len = len(vector3D)  # res_len = 3
 res_abs = abs(vector3D)

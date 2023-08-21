@@ -7,9 +7,7 @@ class MaxPooling:
     Matrix = List[List[int]]
     Digit = Union[int, float]
 
-    def __init__(
-        self, step: Tuple[int, int] = (2, 2), size: Tuple[int, int] = (2, 2)
-    ):
+    def __init__(self, step: Tuple[int, int] = (2, 2), size: Tuple[int, int] = (2, 2)):
         self.step = step
         self.size = size
 
@@ -17,8 +15,7 @@ class MaxPooling:
     def _check_matrix(self, matrix: Matrix) -> None:
         list_size = len(matrix[0])
         if any(
-            len(list) != list_size or not self._check_symbols(list)
-            for list in matrix
+            len(list) != list_size or not self._check_symbols(list) for list in matrix
         ):
             raise ValueError("Неверный формат для первого параметра matrix.")
 
@@ -26,9 +23,7 @@ class MaxPooling:
     def _check_symbols(list: List[Digit]) -> bool:
         return all(isinstance(symbol, (int, float)) for symbol in list)
 
-    def _get_submatrix_max_value(
-        self, matrix: Matrix, x: int, y: int
-    ) -> Digit:
+    def _get_submatrix_max_value(self, matrix: Matrix, x: int, y: int) -> Digit:
         max_value = max(
             matrix[local_y][local_x]
             for local_y in range(y, y + self.size[1])
@@ -53,9 +48,7 @@ class MaxPooling:
             y = y_count * y_axis_step
             for x_count in range(x_axis_steps_count):
                 x = x_count * x_axis_step
-                res[y_count].append(
-                    self._get_submatrix_max_value(matrix, x, y)
-                )
+                res[y_count].append(self._get_submatrix_max_value(matrix, x, y))
         return res
 
     def __repr__(self):
@@ -88,7 +81,7 @@ else:
     ), "некорректо отработала проверка (или она отсутствует) на не прямоугольную матрицу"
 
 try:
-    res = mp([[1, 2], [3, '4']])
+    res = mp([[1, 2], [3, "4"]])
 except ValueError:
     assert True
 else:

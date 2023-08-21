@@ -14,11 +14,11 @@ ls = subprocess.run(
     [f'ls {current_dir.as_posix()} | egrep "*.txt"'],
     shell=True,
     capture_output=True,
-    encoding='utf-8',
-    check=True
-    )
+    encoding="utf-8",
+    check=True,
+)
 
-files = [current_dir / file for file in ls.stdout.strip().split('\n')]
+files = [current_dir / file for file in ls.stdout.strip().split("\n")]
 
 # print(string)
 
@@ -30,9 +30,9 @@ files = [current_dir / file for file in ls.stdout.strip().split('\n')]
 for file in files:
     string = (
         f'mv {file} {file.parent}/{file.stem.replace("rename_project", "")}'
-        f'{file.suffix}'
-        )
-    
+        f"{file.suffix}"
+    )
+
     print(string)
 
     # res = subprocess.run(

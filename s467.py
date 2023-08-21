@@ -39,9 +39,7 @@ class MoneyOperators:
         self.raise_error_if_mismatched_type()
         return self.execute_operation(self._other.money)
 
-    def execute_operation(
-        self, other: Union[Number, "Money"]
-    ) -> "Money":
+    def execute_operation(self, other: Union[Number, "Money"]) -> "Money":
         return self.__class__(self._operator(self.money, other))  # type: ignore
 
     def other_is_number(self) -> bool:

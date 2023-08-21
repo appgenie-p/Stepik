@@ -17,16 +17,16 @@ class StackObj:
         self.__data = data
 
     @property
-    def next(self) -> Optional['StackObj']:
+    def next(self) -> Optional["StackObj"]:
         return self.__next
 
     @next.setter
-    def next(self, next_obj: Optional['StackObj']) -> None:
+    def next(self, next_obj: Optional["StackObj"]) -> None:
         if isinstance(next_obj, StackObj) or next_obj is None:
             self.__next = next_obj
 
     def __repr__(self) -> str:
-        return f'{self.data}'
+        return f"{self.data}"
 
 
 class Stack:
@@ -67,7 +67,7 @@ class Stack:
         return objs_list
 
     def __repr__(self) -> str:
-        return ' -> '.join(self.get_data())
+        return " -> ".join(self.get_data())
 
 
 # s = Stack()
@@ -104,7 +104,7 @@ print(s)
 # while h:
 #     h = h.next
 #     n += 1
-    
+
 # assert n == 0, "при удалении всех объектов, стек-подобная стурктура оказалась не пустой"
 
 # s = Stack()

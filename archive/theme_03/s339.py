@@ -8,7 +8,7 @@ class Ingredient:
         self.measure = measure
 
     def __str__(self) -> str:
-        return f'{self.name}: {self.volume}, {self.measure}'
+        return f"{self.name}: {self.volume}, {self.measure}"
 
 
 class Recipe:

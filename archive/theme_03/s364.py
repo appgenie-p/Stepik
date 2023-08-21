@@ -17,6 +17,6 @@ class Rect:
 r1 = Rect(10, 5, 100, 50)
 r2 = Rect(-10, 4, 100, 50)
 
-h1, h2 = hash(r1), hash(r2)   # h1 == h2
+h1, h2 = hash(r1), hash(r2)  # h1 == h2
 
-assert h1 == h2, 'хэши не совпадают'
+assert h1 == h2, "хэши не совпадают"

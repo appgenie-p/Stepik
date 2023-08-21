@@ -6,10 +6,9 @@ class Filter:
         self.date = date
 
     def __setattr__(self, __name, __value) -> None:
-        if hasattr(self, 'date'):
+        if hasattr(self, "date"):
             return
-        if (isinstance(__value, int) or isinstance(__value, float)) \
-                and __value >= 0:
+        if (isinstance(__value, int) or isinstance(__value, float)) and __value >= 0:
             super().__setattr__(__name, __value)
 
 
@@ -51,7 +50,6 @@ class GeyserClassic:
 
     def water_on(self):
         return all(
-            i is not None
-            and (0 <= time.time() - i.date <= self.MAX_DATE_FILTER)
+            i is not None and (0 <= time.time() - i.date <= self.MAX_DATE_FILTER)
             for _, i in self.slots.items()
         )

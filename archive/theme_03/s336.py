@@ -1,6 +1,6 @@
 class ComplexNumberDescr:
     def __set_name__(self, obj, name):
-        self.name = f'_{obj.__name__}__' + name
+        self.name = f"_{obj.__name__}__" + name
 
     def __set__(self, obj, val):
         if isinstance(val, (int, float)):
@@ -23,7 +23,7 @@ class Complex:
         self.img = img
 
     def __abs__(self):
-        return (self.real**2 + self.img**2)**0.5
+        return (self.real**2 + self.img**2) ** 0.5
 
 
 cmp = Complex(7, 8)
@@ -33,4 +33,6 @@ c_abs = abs(cmp)
 
 
 print(type(Complex.real))
-assert type(Complex.real) == property and type(Complex.img) == property, "в классе Complex должны быть объявлены объекты-свойства real и img"
+assert (
+    type(Complex.real) == property and type(Complex.img) == property
+), "в классе Complex должны быть объявлены объекты-свойства real и img"

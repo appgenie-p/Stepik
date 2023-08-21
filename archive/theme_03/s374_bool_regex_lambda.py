@@ -11,7 +11,7 @@ class Player:
         return self.score > 0
 
     def __repr__(self) -> str:
-        return f'{self.name}'
+        return f"{self.name}"
 
 
 def options_prep(string: str) -> Tuple[str, int, int]:
@@ -21,7 +21,7 @@ def options_prep(string: str) -> Tuple[str, int, int]:
 
 lst_in = list(map(str.strip, sys.stdin.readlines()))
 
-reg = re.compile(r'(\w*\s*\w*);\s(\d+);\s(\d+)')
+reg = re.compile(r"(\w*\s*\w*);\s(\d+);\s(\d+)")
 
 players = [Player(*options_prep(string)) for string in lst_in]
 players_filtered = list(filter(lambda x: x, players))

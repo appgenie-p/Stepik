@@ -56,8 +56,8 @@ class Lib:
 def lib():
     library = {}
     library["lib"] = Lib()
-    library["book_1"] = Book('Name_1', 'Author_1', 2022)
-    library["book_2"] = Book('Name_2', 'Author_1', 2023)
+    library["book_1"] = Book("Name_1", "Author_1", 2022)
+    library["book_2"] = Book("Name_2", "Author_1", 2023)
     return library
 
 
@@ -74,9 +74,9 @@ def test_add_book(lib):
 
 def test_remove_book():
     lib = Lib()
-    book_1 = Book('Name_1', 'Author_1', 2022)
+    book_1 = Book("Name_1", "Author_1", 2022)
     lib + book_1
-    book_2 = Book('Name_2', 'Author_1', 2023)
+    book_2 = Book("Name_2", "Author_1", 2023)
     lib += book_2
     assert len(lib) == 2
     lib - book_1
@@ -92,10 +92,10 @@ def test_remove_book():
 def test_library_len():
     lib = Lib()
     assert len(lib) == 0
-    book_1 = Book('Name_1', 'Author_1', 2022)
+    book_1 = Book("Name_1", "Author_1", 2022)
     lib = lib + book_1
     assert len(lib) == 1
-    book_2 = Book('Name_2', 'Author_2', 2023)
+    book_2 = Book("Name_2", "Author_2", 2023)
     lib += book_2
     assert len(lib) == 2
     lib -= book_2

@@ -18,11 +18,12 @@ def test_aircraft_creation_with_negative_mass():
 
 def test_passenger_aircraft_creation_error():
     with pytest.raises(TypeError):
-        PassengerAircraft('model', 1, 2, 3, 1.2)
+        PassengerAircraft("model", 1, 2, 3, 1.2)
+
 
 def test_passenger_aircraft_creation_error():
     with pytest.raises(TypeError):
-        WarPlane('model', 1, 2, 3, [1, 2])
+        WarPlane("model", 1, 2, 3, [1, 2])
 
 
 def test_aircraft_creation_with_not_str_name():
@@ -32,14 +33,14 @@ def test_aircraft_creation_with_not_str_name():
 
 def test_planes():
     planes = [
-        PassengerAircraft('МС-21', 1250, 8000, 12000.5, 140),
-        PassengerAircraft('SuperJet', 1145, 8640, 11034, 80),
-        WarPlane('Миг-35', 7034, 25000, 2000, {"ракета": 4, "бомба": 10}),
-        WarPlane('Су-35', 7034, 34000, 2400, {"ракета": 4, "бомба": 7}),
+        PassengerAircraft("МС-21", 1250, 8000, 12000.5, 140),
+        PassengerAircraft("SuperJet", 1145, 8640, 11034, 80),
+        WarPlane("Миг-35", 7034, 25000, 2000, {"ракета": 4, "бомба": 10}),
+        WarPlane("Су-35", 7034, 34000, 2400, {"ракета": 4, "бомба": 7}),
     ]
     assert len(planes) == 4
 
 
 def test_int_validator():
     with pytest.raises(TypeError):
-        PassengerAircraft('МС-21', 1250, 8000, 12000.5, '140')
+        PassengerAircraft("МС-21", 1250, 8000, 12000.5, "140")

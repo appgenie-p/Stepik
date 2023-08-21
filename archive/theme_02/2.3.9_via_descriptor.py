@@ -34,7 +34,9 @@ class TVProgram:
             self.items.remove(next(items_for_del))
 
 
-assert hasattr(TVProgram, 'add_telecast') and hasattr(TVProgram, 'remove_telecast'), "в классе TVProgram должны быть методы add_telecast и remove_telecast"
+assert hasattr(TVProgram, "add_telecast") and hasattr(
+    TVProgram, "remove_telecast"
+), "в классе TVProgram должны быть методы add_telecast и remove_telecast"
 
 pr = TVProgram("Первый канал")
 pr.add_telecast(Telecast(1, "Доброе утро", 10000))
@@ -43,5 +45,9 @@ t = Telecast(2, "Интервью с Балакиревым", 20)
 pr.add_telecast(t)
 
 pr.remove_telecast(3)
-assert len(pr.items) == 2, "неверное число телеперач, возможно, некорректно работает метод remove_telecast"
-assert pr.items[-1] == t, "удалена неверная телепередача (возможно, вы удаляете не по __id, а по порядковому индексу в списке items)"
+assert (
+    len(pr.items) == 2
+), "неверное число телеперач, возможно, некорректно работает метод remove_telecast"
+assert (
+    pr.items[-1] == t
+), "удалена неверная телепередача (возможно, вы удаляете не по __id, а по порядковому индексу в списке items)"

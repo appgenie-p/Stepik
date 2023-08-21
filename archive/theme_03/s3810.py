@@ -15,27 +15,23 @@ class SparseTable:
 
     @property
     def rows(self):
-        return (
-            max(row for row, _ in self.table.keys()) + 1 if self.table else 0
-        )
+        return max(row for row, _ in self.table.keys()) + 1 if self.table else 0
 
     @property
     def cols(self):
-        return (
-            max(cols for _, cols in self.table.keys()) + 1 if self.table else 0
-        )
+        return max(cols for _, cols in self.table.keys()) + 1 if self.table else 0
 
     def add_data(self, row: int, col: int, data: Cell) -> None:
         self.table[(row, col)] = data
 
     def remove_data(self, row: int, col: int) -> None:
         if (row, col) not in self.table:
-            raise IndexError('ячейка не существует')
+            raise IndexError("ячейка не существует")
         del self.table[row, col]
 
     def __getitem__(self, key: Tuple[int, int]) -> Cell:
         if key not in self.table:
-            raise ValueError('ячейка не существует')
+            raise ValueError("ячейка не существует")
         return self.table[key].value
 
     def __setitem__(self, key: Tuple[int, int], value: Any) -> None:
@@ -78,7 +74,7 @@ except IndexError:
 else:
     assert False, "не сгенерировалось исключение IndexError"
 
-d = Cell('5')
+d = Cell("5")
 assert (
-    d.value == '5'
+    d.value == "5"
 ), "неверное значение атрибута value в объекте класса Cell, возможно, некорректно работает инициализатор класса"

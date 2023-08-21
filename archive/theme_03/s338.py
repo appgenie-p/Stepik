@@ -4,7 +4,7 @@ import time
 
 class TimeParts:
     def __set_name__(self, obj, name: str):
-        self.name = '_' + name
+        self.name = "_" + name
 
     def __set__(self, obj, val: int):
         if isinstance(val, int) and val >= 0:
@@ -21,6 +21,7 @@ class Clock:
     где hours, minutes, seconds - часы, минуты, секунды
     (целые неотрицательные числа).
     """
+
     hours = TimeParts()
     minutes = TimeParts()
     seconds = TimeParts()
@@ -50,6 +51,7 @@ class DeltaClock:
     print(dt)   # отображает строку разницы времен clock1 - clock2 в формате:
     часы: минуты: секунды. Добавляется незначащий ноль, если число меньше 10.
     """
+
     def __init__(self, clock1: Clock, clock2: Clock) -> None:
         self.clock1 = clock1
         self.clock2 = clock2
@@ -67,4 +69,4 @@ dt = DeltaClock(Clock(2, 45, 0), Clock(1, 15, 0))
 str_dt = str(dt)
 print(str_dt)
 len_dt = len(dt)
-print(dt)       # 01: 30: 00
+print(dt)  # 01: 30: 00

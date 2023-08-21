@@ -1,9 +1,9 @@
 class Base:
     def __new__(cls, *args, **kwargs):
-        print('Base.__new__ called')
+        print("Base.__new__ called")
         obj = super().__new__(cls)
-        setattr(obj, 'args', args)
-        setattr(obj, 'kwargs', kwargs)
+        setattr(obj, "args", args)
+        setattr(obj, "kwargs", kwargs)
         return obj
 
 
@@ -25,12 +25,12 @@ class Game(Singleton):
     """A class for game"""
 
     def __init__(self, name: str):
-        if not hasattr(self, 'name'):
+        if not hasattr(self, "name"):
             self.name = name
 
 
-game1 = Game('game1')
-game2 = Game('game2')
+game1 = Game("game1")
+game2 = Game("game2")
 
 print(game1.name)
 print(game2._instance)

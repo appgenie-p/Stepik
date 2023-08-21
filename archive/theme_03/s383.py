@@ -6,7 +6,7 @@ from typing import Union
 Pt = Union[int, float]
 
 
-Point = namedtuple('Point', ['x', 'y'])
+Point = namedtuple("Point", ["x", "y"])
 
 
 class Track:
@@ -20,7 +20,7 @@ class Track:
 
     def _check_index(self, index):
         if index >= len(self.points):
-            raise IndexError('некорректный индекс')
+            raise IndexError("некорректный индекс")
 
     def __getitem__(self, index):
         self._check_index(index)

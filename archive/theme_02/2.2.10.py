@@ -12,10 +12,11 @@ class PhoneBook:
         try:
             self.phones.pop(indx)
         except IndexError:
-            raise 'index is not exist'
+            raise "index is not exist"
 
     def get_phone_list(self):
         return self.phones
+
 
 @dataclass
 class PhoneNumber:
@@ -32,7 +33,7 @@ class PhoneNumber:
         if len(str(number)) == 11:
             self._number = number
             return None
-        raise Exception('Number of digits is not 11')
+        raise Exception("Number of digits is not 11")
 
 
 p = PhoneBook()

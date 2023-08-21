@@ -9,7 +9,7 @@ Cur = Union[int, float]
 class CentralBank:
     """CentralBank is a class for representing Central Bank."""
 
-    rates = {'rub': 72.5, 'dollar': 1.0, 'euro': 1.15}
+    rates = {"rub": 72.5, "dollar": 1.0, "euro": 1.15}
 
     def __new__(cls):
         return None
@@ -57,14 +57,12 @@ class MoneyBase(ABC):
             raise ValueError("Неизвестен курс валют.")
 
         self_currency = self.currency
-        if self_currency == 'rub':
+        if self_currency == "rub":
             return round(self.volume, 1)
-        if self_currency == 'dollar':
-            return round(self.volume * self.cb.rates['rub'], 1)
-        if self_currency == 'euro':
-            return round(
-                self.volume * self.cb.rates['rub'] * self.cb.rates['euro'], 1
-            )
+        if self_currency == "dollar":
+            return round(self.volume * self.cb.rates["rub"], 1)
+        if self_currency == "euro":
+            return round(self.volume * self.cb.rates["rub"] * self.cb.rates["euro"], 1)
 
     def __eq__(self, other):
         return self._to_rub() == other._to_rub()
@@ -74,15 +72,15 @@ class MoneyBase(ABC):
 
 
 class MoneyR(MoneyBase):
-    currency = 'rub'
+    currency = "rub"
 
 
 class MoneyD(MoneyBase):
-    currency = 'dollar'
+    currency = "dollar"
 
 
 class MoneyE(MoneyBase):
-    currency = 'euro'
+    currency = "euro"
 
 
 ###################################################
@@ -113,5 +111,5 @@ def test_create_money_class_without_currency_variable():
         Money()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

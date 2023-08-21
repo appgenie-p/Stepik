@@ -17,24 +17,18 @@ class Food(ABC):
 
 
 class BreadFood(Food):
-    def __init__(
-        self, name: str, weight: Number, calories: int, white: bool
-    ) -> None:
+    def __init__(self, name: str, weight: Number, calories: int, white: bool) -> None:
         super().__init__(name, weight, calories)
         self._white = white
 
 
 class SoupFood(Food):
-    def __init__(
-        self, name: str, weight: Number, calories: int, dietary: bool
-    ) -> None:
+    def __init__(self, name: str, weight: Number, calories: int, dietary: bool) -> None:
         super().__init__(name, weight, calories)
         self._dietary = dietary
 
 
 class FishFood(Food):
-    def __init__(
-        self, name: str, weight: Number, calories: int, fish: str
-    ) -> None:
+    def __init__(self, name: str, weight: Number, calories: int, fish: str) -> None:
         super().__init__(name, weight, calories)
         self._fish = fish

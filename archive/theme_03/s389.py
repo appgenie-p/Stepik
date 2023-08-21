@@ -32,7 +32,7 @@ class Bag:
         )
 
         if new_weight > self.max_weight:
-            raise ValueError('превышен суммарный вес предметов')
+            raise ValueError("превышен суммарный вес предметов")
 
     def __getitem__(self, index: int) -> Thing:
         return self.things[index]
@@ -49,13 +49,13 @@ class Bag:
 
 
 b = Bag(700)
-b.add_thing(Thing('книга', 100))
-b.add_thing(Thing('носки', 200))
+b.add_thing(Thing("книга", 100))
+b.add_thing(Thing("носки", 200))
 
-b[0] = Thing('рубашка', 500)
+b[0] = Thing("рубашка", 500)
 
 try:
-    b[0] = Thing('рубашка', 800)
+    b[0] = Thing("рубашка", 800)
 except ValueError:
     assert True
 else:

@@ -2,7 +2,7 @@ from typing import Any
 
 
 class Cell:
-    __slots__ = ('__data',)
+    __slots__ = ("__data",)
 
     def __init__(self, data: Any) -> None:
         self.data: Any = data
@@ -16,17 +16,15 @@ class Cell:
         self.__data = data
 
     def __repr__(self) -> str:
-        return f'Cell({self.data})'
+        return f"Cell({self.data})"
 
 
 class TableValues:
-    __slots__ = ('table', 'type_data')
+    __slots__ = ("table", "type_data")
 
     def __init__(self, rows: int, cols: int, type_data: Any = int) -> None:
         self.type_data: Any = type_data
-        self.table = tuple(
-            tuple(Cell(0) for _ in range(cols)) for _ in range(rows)
-        )
+        self.table = tuple(tuple(Cell(0) for _ in range(cols)) for _ in range(rows))
 
     def __getitem__(self, index: tuple) -> Any:
         row, col = index
@@ -34,7 +32,7 @@ class TableValues:
 
     def __setitem__(self, index: tuple, data: Any) -> None:
         if type(data) != self.type_data:
-            raise TypeError('неверный тип присваиваемых данных')
+            raise TypeError("неверный тип присваиваемых данных")
         row, col = index
         self.table[row][col].data = data
 
@@ -42,7 +40,7 @@ class TableValues:
         return ((item.data for item in row) for row in self.table)
 
 
-cell = Cell('a')
+cell = Cell("a")
 
 print(
     list(cell.data),

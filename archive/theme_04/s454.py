@@ -5,7 +5,7 @@ from typing import Union
 class ShopInterface:
     @abstractmethod
     def get_id(self) -> int:
-        raise NotImplementedError('в классе не переопределен метод get_id')
+        raise NotImplementedError("в классе не переопределен метод get_id")
 
 
 PositiveNumber = Union[int, float]

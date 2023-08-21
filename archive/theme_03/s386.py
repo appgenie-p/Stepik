@@ -4,18 +4,18 @@ from typing import Optional
 
 
 class StackObj:
-    __slots__ = ('data', 'next')
+    __slots__ = ("data", "next")
 
     def __init__(self, data: str):
         self.data: str = data
-        self.next: Optional['StackObj'] = None
+        self.next: Optional["StackObj"] = None
 
     def __repr__(self):
-        return f'StackObj({self.data})'
+        return f"StackObj({self.data})"
 
 
 class Stack:
-    __slots__ = ('top', '_size')
+    __slots__ = ("top", "_size")
 
     def __init__(self):
         self.top = None
@@ -23,25 +23,19 @@ class Stack:
 
     def _check_index(self, index):
         calling_function = inspect.stack()[1].function
-        stack_length = (
-            len(self) - 1 if calling_function == '__getitem__' else len(self)
-        )
-        if (
-            not isinstance(index, numbers.Integral)
-            or index < 0
-            or index > stack_length
-        ):
-            raise IndexError('неверный индекс')
+        stack_length = len(self) - 1 if calling_function == "__getitem__" else len(self)
+        if not isinstance(index, numbers.Integral) or index < 0 or index > stack_length:
+            raise IndexError("неверный индекс")
 
     def push(self, data: StackObj):
         if not isinstance(data, StackObj):
-            raise ValueError('возможны только объекты StackObj')
+            raise ValueError("возможны только объекты StackObj")
         self[len(self)] = data
         self._size += 1
 
     def pop(self) -> StackObj:
         if not self.top:
-            raise IndexError('стек пуст')
+            raise IndexError("стек пуст")
         last_index = len(self) - 1
         data = self[last_index]
         self[last_index - 1].next = None
@@ -66,15 +60,15 @@ class Stack:
 
     def __setitem__(self, index: int, data: StackObj):
         self._check_index(index)
-        if index == 0 and not getattr(self.top, 'next', None):
+        if index == 0 and not getattr(self.top, "next", None):
             self.top = data
         elif index == 0:
             data.next = self.top.next
             self.top = data
         else:
             previous = self[index - 1]
-            if getattr(previous.next, 'next', None):
-                data.next = getattr(previous.next, 'next')
+            if getattr(previous.next, "next", None):
+                data.next = getattr(previous.next, "next")
             previous.next = data
 
 
@@ -109,6 +103,4 @@ while h:
     n += 1
     h = h.next
 
-assert (
-    n == 2
-), "неверное число объектов в стеке (возможно, нарушена его структура)"
+assert n == 2, "неверное число объектов в стеке (возможно, нарушена его структура)"

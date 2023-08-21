@@ -10,8 +10,7 @@ class FloatValue:
 
     def __set__(self, obj, val):
         if not isinstance(val, float):
-            raise TypeError(
-                "Присваивать можно только вещественный типданных.")
+            raise TypeError("Присваивать можно только вещественный типданных.")
         setattr(obj, self.name, val)
 
 
@@ -22,7 +21,7 @@ class Cell:
         self.value = val
 
     def __repr__(self) -> str:
-        return f'{self.value}'
+        return f"{self.value}"
 
 
 class TableSheet:
@@ -37,9 +36,7 @@ for i in table.cells:
         j.value = inc
         inc += 1
 
-print(
-    table.cells[0][0].value
-)
+print(table.cells[0][0].value)
 
 assert isinstance(table, TableSheet)
 assert len(table.cells) == 5 and len(table.cells[0]) == 3
@@ -53,9 +50,8 @@ table.cells[0][0].value = 1.0
 x = table.cells[1][0].value
 
 try:
-    table.cells[0][0].value = 'a'
+    table.cells[0][0].value = "a"
 except TypeError:
     assert True
 else:
     assert False, "не сгенерировалось исключение TypeError"
-

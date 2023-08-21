@@ -36,4 +36,4 @@ input_data = """
 Кеша; попугай; 3
 """
 
-animals = [Animal(*val.split('; ')) for val in input_data.strip().splitlines()]
+animals = [Animal(*val.split("; ")) for val in input_data.strip().splitlines()]

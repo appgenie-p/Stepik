@@ -11,9 +11,7 @@ class Thing:
         Предметы считаются равными, если у них одинаковые названия name (без
         учета регистра) и массы mass.
         """
-        return (
-            self.name.lower() == other.name.lower() and self.mass == other.mass
-        )
+        return self.name.lower() == other.name.lower() and self.mass == other.mass
 
     def __lt__(self, other):
         return (self.name.lower(), self.mass) < (

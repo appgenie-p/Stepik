@@ -1,11 +1,11 @@
 from typing import Any, Generic, TypeVar
 
-T = TypeVar('T', contravariant=True)
+T = TypeVar("T", contravariant=True)
 
 
 class Validator(Generic[T]):
     def _is_valid(self, data: T) -> bool:
-        raise NotImplementedError('в классе не переопределен метод _is_valid')
+        raise NotImplementedError("в классе не переопределен метод _is_valid")
 
 
 class FloatValidator(Validator[float]):
@@ -14,10 +14,7 @@ class FloatValidator(Validator[float]):
         self._max_value = max_value
 
     def _is_valid(self, data: Any) -> bool:
-        return (
-            isinstance(data, float)
-            and self._min_value <= data <= self._max_value
-        )
+        return isinstance(data, float) and self._min_value <= data <= self._max_value
 
     def __call__(self, value: float) -> bool:
         return self._is_valid(value)
