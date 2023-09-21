@@ -21,9 +21,9 @@ class PositiveNum(Generic[T]):
 
 
 class Triangle:
-    _a = PositiveNum()
-    _b = PositiveNum()
-    _c = PositiveNum()
+    _a: PositiveNum[Any] = PositiveNum()
+    _b: PositiveNum[Any] = PositiveNum()
+    _c: PositiveNum[Any] = PositiveNum()
 
     def __init__(self, a, b, c):
         self._a = a
