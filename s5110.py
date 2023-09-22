@@ -31,9 +31,9 @@ class IntegerValidator:
         return True
 
 
-def check_value(
-    value: Any,
-    obj: Union[FloatValidator, IntegerValidator],
-    type_: Union[int, float],
-) -> bool:
-    return True
+# def check_value(
+#     value: An
+#     obj: Union[FloatValidator, IntegerValidator],
+#     type_: Union[int, float],
+# ) -> bool:
+#     return True
