@@ -41,7 +41,7 @@ def _check_negative_value(value: Number) -> None:
         raise ValueError("некорректные координаты и параметры прямоугольника")
 
 
-def _get_uncrossed_rects(combinations: List[Tuple[Rect, Rect]]) -> List[Rect]:
+def _get_uncrossed_rectangles(combinations: List[Tuple[Rect, Rect]]) -> List[Rect]:
     lst_not_collision: Set[Rect] = set()
     failed_members: Set[Rect] = set()
     for rect1, rect2 in combinations:
@@ -68,7 +68,7 @@ lst_rect = [Rect(*map(eval, cords)) for cords in data_for_rects]
 
 all_combinations = list(itertools.combinations(lst_rect, 2))
 
-lst_not_collision = _get_uncrossed_rects(all_combinations)
+lst_not_collision = _get_uncrossed_rectangles(all_combinations)
 pass
 
 if __name__ == "__main__":
