@@ -1,3 +1,0 @@
-rule_settings:
-  disable:
-  - instance-method-first-arg-name
