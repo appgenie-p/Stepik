@@ -79,6 +79,8 @@ class CellString:
 
 
 class TupleData:
+    __slots__ = ("data",)
+
     def __init__(self, *args: Union[CellInteger, CellFloat, CellString]):
         self.data = args
 
