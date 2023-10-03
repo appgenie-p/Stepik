@@ -22,9 +22,16 @@ class Box:
         self._current_weight += obj.weight
 
 
-class BoxDefender(Box):
+class BoxDefender:
     def __init__(self, box: Box):
         self._box = box
+        self._temp_box = deepcopy(box)
 
     def __enter__(self):
-        pass
+        return self._temp_box
+
+    def __exit__(self, exc_type: Exception, exc_val, exc_tb):
+        if exc_type is ValueError:
+            return False
+        self._box._things += self._temp_box._things[len(self._box._things) :]
+        self._box._current_weight = self._temp_box._current_weight
