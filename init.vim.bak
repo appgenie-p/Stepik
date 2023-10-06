@@ -1,0 +1,43 @@
+let mapleader = "\\"
+nnoremap <leader>t :echo "Leader key works!"<cr>
+
+" <Ctrl-l> redraws the screen and removes any search highlighting.
+nnoremap <silent> <C-l> :nohl<CR><C-l>
+
+" Override ignorecase when a pattern contains uppercase characters
+set smartcase
+
+" Configure plugins to install automatically
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
+"Section for plugin install
+call plug#begin()
+" Add plugin definitions here
+Plug 'junegunn/vim-plug'
+Plug 'unblevable/quick-scope'
+Plug 'machakann/vim-sandwich'
+call plug#end()
+
+" setting needed by 'unblevable/quick-scope' plugin to work
+highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline
+highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline
+
+highlight OperatorSandwichBuns guifg='#aa91a0' gui=underline ctermfg=172 cterm=underline
+highlight OperatorSandwichChange guifg='#edc41f' gui=underline ctermfg='yellow' cterm=underline
+highlight OperatorSandwichAdd guibg='#b1fa87' gui=none ctermbg='green' cterm=none
+highlight OperatorSandwichDelete guibg='#cf5963' gui=none ctermbg='red' cterm=none
