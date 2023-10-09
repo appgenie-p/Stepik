@@ -56,13 +56,14 @@ class Link:
         return iter([self.v1, self.v2])
 
     def __repr__(self) -> str:
-        return f"Link({self.v1}, {self.v2}, {self.dist})"
+        return f"Link({self.v1}, {self.v2})"
 
 
 class LinkedGraph:
     def __init__(self) -> None:
         self._links: List[Link] = []
         self._vertex: List[Vertex] = []
+        self._links_copy: List[Link]
 
     def add_vertex(self, vertex: Vertex) -> None:
         if vertex in self._vertex:
@@ -80,38 +81,42 @@ class LinkedGraph:
         return f"LinkedGraph({repr(self._vertex)}, {repr(self._links)})"
 
     def find_path(
-        self, start_v: Vertex, stop_v: Vertex
+        self, start: Vertex, stop: Vertex
     ) -> Tuple[List[Vertex], List[Link]]:
-        self._original_links = self._links.copy()
-        return self._find_path_main(start_v, stop_v)
+        self._links_copy = self._links.copy()
+        return self._find_path_main(start, stop)
 
     def _find_path_main(
-        self, start_v: Vertex, stop_v: Vertex
+        self, start: Vertex, stop: Vertex
     ) -> Tuple[List[Vertex], List[Link]]:
-        start_links: List[Link] = self._get_links(start_v)
+        links_with_start: List[Link] = self._get_links_with_start(start)
 
-        if self._check_vertex_in_links(stop_v, start_links):
-            final_link = self._get_link_with_vertex(stop_v, start_links)
-            return [start_v, stop_v], [final_link]
+        if self._is_stop_in_links_with_start(stop, links_with_start):
+            final_link = self._get_link_with_vertex(stop, links_with_start)
+            return [start, stop], [final_link]
 
-        self._remove_links_from_original_list(start_links)
+        # self._remove_links_from_links_copy(links_with_start)
 
-        for link in start_links:
-            other_vertex = self._get_other_vertex(link, start_v)
-            if path := self._find_path_main(other_vertex, stop_v):
-                return [start_v] + path[0], [link] + path[1]
+        for link in links_with_start:
+            self._links_copy.remove(link)
+            other_vertex = self._get_other_vertex(link, start)
+            if path := self._find_path_main(other_vertex, stop):
+                return [start] + path[0], [link] + path[1]
 
-        # link_with_vertex = self._get_link_with_vertex(start_v, start_links)
-        # other_vertex = self._get_other_vertex(link_with_vertex, start_v)
-        # return [start_v, other_vertex], [link_with_vertex]
+        raise ValueError("No links provided")
 
-    def _remove_links_from_original_list(self, start_links: List[Link]):
-        [self._original_links.remove(link) for link in start_links]
+    def _remove_links_from_links_copy(
+        self, links_with_start: List[Link]
+    ) -> None:
+        for link in links_with_start:
+            self._links_copy.remove(link)
 
-    def _get_links(self, start_v: Vertex) -> List[Link]:
-        return [link for link in self._original_links if start_v in link]
+    def _get_links_with_start(self, start: Vertex) -> List[Link]:
+        return [link for link in self._links_copy if start in link]
 
-    def _check_vertex_in_links(self, vertex: Vertex, links: List[Link]) -> bool:
+    def _is_stop_in_links_with_start(
+        self, vertex: Vertex, links: List[Link]
+    ) -> bool:
         return any(vertex in link for link in links)
 
     def _get_link_with_vertex(self, vertex: Vertex, links: List[Link]) -> Link:
