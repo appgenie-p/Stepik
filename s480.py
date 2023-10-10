@@ -125,12 +125,6 @@ class LinkedGraph:
                     shortest = new_path
         return shortest
 
-    def _remove_links_from_links_copy(
-        self, links_with_start: List[Link]
-    ) -> None:
-        for link in links_with_start:
-            self._links_copy.remove(link)
-
     def _get_links_with_start(self, start: Vertex) -> List[Link]:
         return [link for link in self._links_copy if start in link]
 
