@@ -1,5 +1,6 @@
+from copy import deepcopy
 from reprlib import repr
-from typing import Any, List, Tuple
+from typing import List, Optional, Set, Tuple
 
 
 class Vertex:
@@ -15,7 +16,10 @@ class Vertex:
         return self._links
 
     def __repr__(self) -> str:
-        return f"Vertex({self._id})"
+        return f"V:{self._id}"
+
+    def __eq__(self, other: object) -> bool:
+        return self._id == other._id
 
 
 class Link:
@@ -76,34 +80,54 @@ class LinkedGraph:
         self._links.append(link)
         self.add_vertex(link.v1)
         self.add_vertex(link.v2)
+        link.v1.links.append(link)
+        link.v2.links.append(link)
 
     def __repr__(self) -> str:
         return f"LinkedGraph({repr(self._vertex)}, {repr(self._links)})"
 
-    def find_path(
-        self, start: Vertex, stop: Vertex
-    ) -> Tuple[List[Vertex], List[Link]]:
+    Path = Tuple[List[Vertex], List[Link]]
+    PathSimple = Optional[List[Vertex]]
+
+    def find_path(self, start: Vertex, stop: Vertex) -> PathSimple:
         self._links_copy = self._links.copy()
-        return self._find_path_main(start, stop)
+        return self._find_path_recursive(start, stop)
 
-    def _find_path_main(
-        self, start: Vertex, stop: Vertex
-    ) -> Tuple[List[Vertex], List[Link]]:
-        links_with_start: List[Link] = self._get_links_with_start(start)
+    def _find_path_recursive(
+        self,
+        start: Vertex,
+        stop: Vertex,
+        visited: Optional[List[Vertex]] = None,
+        path: PathSimple = None,
+        shortest: PathSimple = None,
+    ) -> List[Vertex]:
+        links_with_start = self._get_links_with_start(start)
 
-        if self._is_stop_in_links_with_start(stop, links_with_start):
-            final_link = self._get_link_with_vertex(stop, links_with_start)
-            return [start, stop], [final_link]
+        if visited is None:
+            visited = []
+        if path is None:
+            path = []
+        if shortest is None:
+            shortest = []
 
-        # self._remove_links_from_links_copy(links_with_start)
+        path += [start]
+        visited += [start]
+
+        if start == stop:
+            return path
 
         for link in links_with_start:
-            self._links_copy.remove(link)
             other_vertex = self._get_other_vertex(link, start)
-            if path := self._find_path_main(other_vertex, stop):
-                return [start] + path[0], [link] + path[1]
-
-        raise ValueError("No links provided")
+            if other_vertex not in visited:
+                if new_path := self._find_path_recursive(
+                    start=other_vertex,
+                    stop=stop,
+                    visited=visited,
+                    path=path,
+                    shortest=shortest,
+                ):
+                    shortest = new_path
+        return shortest
 
     def _remove_links_from_links_copy(
         self, links_with_start: List[Link]
