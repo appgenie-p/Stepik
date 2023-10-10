@@ -1,6 +1,5 @@
-from copy import deepcopy
 from reprlib import repr
-from typing import List, Optional, Set, Tuple
+from typing import List, Optional, Tuple
 
 
 class Vertex:
@@ -17,9 +16,6 @@ class Vertex:
 
     def __repr__(self) -> str:
         return f"V:{self._id}"
-
-    def __eq__(self, other: object) -> bool:
-        return self._id == other._id
 
 
 class Link:
