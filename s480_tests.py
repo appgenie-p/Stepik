@@ -165,7 +165,7 @@ def test_graph_find_path_6_vertexes():
     assert path == [v1, v2, v5, v6]
 
 
-def test_graph_find_path_5_vertexes():
+def test_graph_find_path_5_vertexes_with_circuit():
     gr = LinkedGraph()
     v1 = Vertex()
     v2 = Vertex()
