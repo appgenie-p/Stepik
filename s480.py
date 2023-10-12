@@ -1,3 +1,4 @@
+from functools import cache
 from typing import List, Optional, Tuple
 
 
@@ -62,7 +63,6 @@ class LinkedGraph:
     def __init__(self) -> None:
         self._links: List[Link] = []
         self._vertex: List[Vertex] = []
-        self._links_copy: List[Link]
 
     def add_vertex(self, vertex: Vertex) -> None:
         if vertex in self._vertex:
@@ -84,8 +84,8 @@ class LinkedGraph:
     Path = Tuple[List[Vertex], List[Link]]
     PathSimple = Optional[List[Vertex]]
 
+    @cache
     def find_path(self, start: Vertex, stop: Vertex) -> PathSimple:
-        self._links_copy = self._links.copy()
         return self._find_path_recursive(start, stop)
 
     def _find_path_recursive(
@@ -114,31 +114,21 @@ class LinkedGraph:
         for link in links_with_start:
             other_vertex = self._get_other_vertex(link, start)
             if other_vertex not in visited:
-                if new_path := self._find_path_recursive(
+                new_path = self._find_path_recursive(
                     start=other_vertex,
                     stop=stop,
                     visited=visited[:],
                     path=path[:],
-                    shortest=shortest[:],
-                ):
-                    shortest = (
-                        shortest
-                        if stop not in new_path
-                        and len(new_path) > len(shortest)
-                        else new_path
-                    )
+                )
+                shortest = (
+                    shortest
+                    if stop not in new_path and len(new_path) > len(shortest)
+                    else new_path
+                )
         return shortest
 
     def _get_links_with_start(self, start: Vertex) -> List[Link]:
-        return [link for link in self._links_copy if start in link]
-
-    def _is_stop_in_links_with_start(
-        self, vertex: Vertex, links: List[Link]
-    ) -> bool:
-        return any(vertex in link for link in links)
-
-    def _get_link_with_vertex(self, vertex: Vertex, links: List[Link]) -> Link:
-        return next(link for link in links if vertex in link)
+        return [link for link in self._links if start in link]
 
     def _get_other_vertex(self, link: Link, vertex: Vertex) -> Vertex:
         return link.v1 if link.v2 == vertex else link.v2
