@@ -1,4 +1,3 @@
-from reprlib import repr
 from typing import List, Optional, Tuple
 
 
@@ -118,11 +117,16 @@ class LinkedGraph:
                 if new_path := self._find_path_recursive(
                     start=other_vertex,
                     stop=stop,
-                    visited=visited,
-                    path=path,
-                    shortest=shortest,
+                    visited=visited[:],
+                    path=path[:],
+                    shortest=shortest[:],
                 ):
-                    shortest = new_path
+                    shortest = (
+                        shortest
+                        if stop not in new_path
+                        and len(new_path) > len(shortest)
+                        else new_path
+                    )
         return shortest
 
     def _get_links_with_start(self, start: Vertex) -> List[Link]:

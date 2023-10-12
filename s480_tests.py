@@ -145,22 +145,39 @@ def test_graph_find_path_4_vertexes():
     assert path == [v1, v2, v3, v4]
 
 
-# def test_graph_find_path_5_vertexes():
-#     gr = LinkedGraph()
-#     v1 = Vertex()
-#     v2 = Vertex()
-#     v3 = Vertex()
-#     v4 = Vertex()
-#     v5 = Vertex()
-#     gr.add_link(Link(v1, v2))
-#     gr.add_link(Link(v2, v3))
-#     gr.add_link(Link(v2, v4))
-#     gr.add_link(Link(v3, v4))
-#     gr.add_link(Link(v4, v5))
+def test_graph_find_path_6_vertexes():
+    gr = LinkedGraph()
+    v1 = Vertex()
+    v2 = Vertex()
+    v3 = Vertex()
+    v4 = Vertex()
+    v5 = Vertex()
+    v6 = Vertex()
+    gr.add_link(Link(v1, v2))
+    gr.add_link(Link(v2, v3))
+    gr.add_link(Link(v3, v4))
+    gr.add_link(Link(v4, v6))
+    gr.add_link(Link(v2, v5))
+    gr.add_link(Link(v5, v6))
 
-#     path = gr.find_path(v1, v5)
+    path = gr.find_path(v1, v6)
 
-#     assert path == (
-#         [v1, v2, v4, v5],
-#         [Link(v1, v2), Link(v2, v4), Link(v4, v5)],
-#     )
+    assert path == [v1, v2, v5, v6]
+
+
+def test_graph_find_path_5_vertexes():
+    gr = LinkedGraph()
+    v1 = Vertex()
+    v2 = Vertex()
+    v3 = Vertex()
+    v4 = Vertex()
+    v5 = Vertex()
+    gr.add_link(Link(v1, v2))
+    gr.add_link(Link(v2, v3))
+    gr.add_link(Link(v2, v4))
+    gr.add_link(Link(v3, v4))
+    gr.add_link(Link(v4, v5))
+
+    path = gr.find_path(v1, v5)
+
+    assert path == [v1, v2, v4, v5]
