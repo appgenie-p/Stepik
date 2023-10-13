@@ -93,7 +93,7 @@ class LinkedGraph:
     def _find_path_recursive(
         self,
         start: Vertex,
-        visited: Optional[List[Vertex]] = None,
+        visited: Optional[PathSimple] = None,
     ) -> List[Vertex]:
         links_with_start = self._get_links_with_start(start)
 
@@ -118,8 +118,7 @@ class LinkedGraph:
     ) -> PathSimple:
         if other_vertex not in visited:
             next_stop = self._find_path_recursive(
-                start=other_vertex,
-                visited=visited[:],
+                start=other_vertex, visited=visited[:]
             )
             return [start] + next_stop
         return []
