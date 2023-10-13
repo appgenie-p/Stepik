@@ -59,8 +59,8 @@ class Link:
         return f"Link({self.v1}, {self.v2})"
 
 
-Path = Tuple[List[Vertex], List[Link]]
 PathSimple = List[Vertex]
+Path = Tuple[PathSimple, List[Link]]
 
 
 class LinkedGraph:
@@ -86,9 +86,11 @@ class LinkedGraph:
         return f"LinkedGraph({repr(self._vertex)}, {repr(self._links)})"
 
     @cache
-    def find_path(self, start: Vertex, stop: Vertex) -> PathSimple:
+    def find_path(self, start: Vertex, stop: Vertex) -> Path:
         self._stop = stop
-        return self._find_path_recursive(start)
+        path_with_vertexes = self._find_path_recursive(start)
+        path_with_links = create_links_from_vertexes(path_with_vertexes)
+        return (path_with_vertexes, path_with_linkst
 
     def _find_path_recursive(
         self,
@@ -118,3 +120,11 @@ class LinkedGraph:
 
     def _get_other_vertex(self, link: Link, vertex: Vertex) -> Vertex:
         return link.v1 if link.v2 == vertex else link.v2
+
+
+def create_links_from_vertexes(vertexes: List[Vertex]) -> List[Link]:
+    links: List[Link] = []
+    for i in range(len(vertexes) - 1):
+        link = Link(vertexes[i], vertexes[i + 1])
+        links.append(link)
+    return links

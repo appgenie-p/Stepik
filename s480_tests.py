@@ -124,64 +124,64 @@ Vs = tuple[Vertex, ...]
 def test_graph_find_path_2_vertexes(vs: Vs):
     v1, v2, *_ = vs
     sut = LinkedGraph()
-    sut.add_link(Link(v1, v2))
+    sut.add_link(l1 := Link(v1, v2))
 
     path = sut.find_path(v1, v2)
 
-    assert path == [v1, v2]
+    assert path == ([v1, v2], [l1])
 
 
 def test_graph_find_path_3_vertexes(vs: Vs):
     v1, v2, v3, *_ = vs
     sut = LinkedGraph()
-    sut.add_link(Link(v1, v2))
-    sut.add_link(Link(v2, v3))
+    sut.add_link(l1 := Link(v1, v2))
+    sut.add_link(l2 := Link(v2, v3))
 
     path = sut.find_path(v1, v3)
 
-    assert path == [v1, v2, v3]
+    assert path == ([v1, v2, v3], [l1, l2])
 
 
 def test_graph_find_path_4_vertexes(vs: Vs):
     v1, v2, v3, v4, *_ = vs
     sut = LinkedGraph()
-    sut.add_link(Link(v1, v2))
-    sut.add_link(Link(v2, v3))
-    sut.add_link(Link(v3, v4))
+    sut.add_link(l1 := Link(v1, v2))
+    sut.add_link(l2 := Link(v2, v3))
+    sut.add_link(l3 := Link(v3, v4))
 
     path = sut.find_path(v1, v4)
 
-    assert path == [v1, v2, v3, v4]
+    assert path == ([v1, v2, v3, v4], [l1, l2, l3])
 
 
 def test_graph_find_path_6_vertexes(vs: Vs):
     v1, v2, v3, v4, v5, v6 = vs
     gr = LinkedGraph()
-    gr.add_link(Link(v1, v2))
-    gr.add_link(Link(v2, v3))
-    gr.add_link(Link(v3, v4))
-    gr.add_link(Link(v4, v6))
-    gr.add_link(Link(v2, v5))
-    gr.add_link(Link(v5, v6))
+    gr.add_link(l1 := Link(v1, v2))
+    gr.add_link(_ := Link(v2, v3))
+    gr.add_link(_ := Link(v3, v4))
+    gr.add_link(_ := Link(v4, v6))
+    gr.add_link(l5 := Link(v2, v5))
+    gr.add_link(l6 := Link(v5, v6))
 
     path = gr.find_path(v1, v6)
 
-    assert path == [v1, v2, v5, v6]
+    assert path == ([v1, v2, v5, v6], [l1, l5, l6])
 
 
 def test_graph_find_path_6_vertexes_opposite(vs: Vs):
     v1, v2, v3, v4, v5, v6 = vs
     sut = LinkedGraph()
-    sut.add_link(Link(v1, v2))
-    sut.add_link(Link(v2, v5))
-    sut.add_link(Link(v5, v4))
-    sut.add_link(Link(v4, v6))
-    sut.add_link(Link(v2, v3))
-    sut.add_link(Link(v3, v6))
+    sut.add_link(l1 := Link(v1, v2))
+    sut.add_link(_ := Link(v2, v5))
+    sut.add_link(_ := Link(v5, v4))
+    sut.add_link(_ := Link(v4, v6))
+    sut.add_link(l5 := Link(v2, v3))
+    sut.add_link(l6 := Link(v3, v6))
 
     path = sut.find_path(v1, v6)
 
-    assert path == [v1, v2, v3, v6]
+    assert path == ([v1, v2, v3, v6], [l1, l5, l6])
 
 
 def test_graph_find_path_5_vertexes_with_circuit(vs: Vs):
