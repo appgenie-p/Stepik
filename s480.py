@@ -107,21 +107,11 @@ class LinkedGraph:
 
         for link in links_with_start:
             other_vertex = self._get_other_vertex(link, start)
-            path = self._go_to_next(start, visited, other_vertex)
-        return path
-
-    def _go_to_next(
-        self,
-        start: Vertex,
-        visited: PathSimple,
-        other_vertex: Vertex,
-    ) -> PathSimple:
-        if other_vertex not in visited:
-            next_stop = self._find_path_recursive(
-                start=other_vertex, visited=visited[:]
-            )
-            return [start] + next_stop
-        return []
+            if other_vertex not in visited:
+                path = self._find_path_recursive(
+                    start=other_vertex, visited=visited[:]
+                )
+        return [start] + path
 
     def _get_links_with_start(self, start: Vertex) -> List[Link]:
         return [link for link in self._links if start in link]

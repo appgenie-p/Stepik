@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Any, Tuple
 
 import pytest
 
@@ -107,52 +107,56 @@ def test_graph_add_existing_link(graph: Graph):
     )
 
 
-def test_graph_find_path_2_vertexes():
-    gr = LinkedGraph()
-    v1 = Vertex()
-    v2 = Vertex()
-    gr.add_link(Link(v1, v2))
-
-    path = gr.find_path(v1, v2)
-
-    assert path == [v1, v2]
-
-
-def test_graph_find_path_3_vertexes():
-    gr = LinkedGraph()
-    v1 = Vertex()
-    v2 = Vertex()
-    v3 = Vertex()
-    gr.add_link(Link(v1, v2))
-    gr.add_link(Link(v2, v3))
-
-    path = gr.find_path(v1, v3)
-    assert path == [v1, v2, v3]
-
-
-def test_graph_find_path_4_vertexes():
-    gr = LinkedGraph()
-    v1 = Vertex()
-    v2 = Vertex()
-    v3 = Vertex()
-    v4 = Vertex()
-    gr.add_link(Link(v1, v2))
-    gr.add_link(Link(v2, v3))
-    gr.add_link(Link(v3, v4))
-
-    path = gr.find_path(v1, v4)
-
-    assert path == [v1, v2, v3, v4]
-
-
-def test_graph_find_path_6_vertexes():
-    gr = LinkedGraph()
+@pytest.fixture
+def vs():
     v1 = Vertex()
     v2 = Vertex()
     v3 = Vertex()
     v4 = Vertex()
     v5 = Vertex()
     v6 = Vertex()
+    return v1, v2, v3, v4, v5, v6
+
+
+Vs = tuple[Vertex, ...]
+
+
+def test_graph_find_path_2_vertexes(vs: Vs):
+    v1, v2, *_ = vs
+    sut = LinkedGraph()
+    sut.add_link(Link(v1, v2))
+
+    path = sut.find_path(v1, v2)
+
+    assert path == [v1, v2]
+
+
+def test_graph_find_path_3_vertexes(vs: Vs):
+    v1, v2, v3, *_ = vs
+    sut = LinkedGraph()
+    sut.add_link(Link(v1, v2))
+    sut.add_link(Link(v2, v3))
+
+    path = sut.find_path(v1, v3)
+
+    assert path == [v1, v2, v3]
+
+
+def test_graph_find_path_4_vertexes(vs: Vs):
+    v1, v2, v3, v4, *_ = vs
+    sut = LinkedGraph()
+    sut.add_link(Link(v1, v2))
+    sut.add_link(Link(v2, v3))
+    sut.add_link(Link(v3, v4))
+
+    path = sut.find_path(v1, v4)
+
+    assert path == [v1, v2, v3, v4]
+
+
+def test_graph_find_path_6_vertexes(vs: Vs):
+    v1, v2, v3, v4, v5, v6 = vs
+    gr = LinkedGraph()
     gr.add_link(Link(v1, v2))
     gr.add_link(Link(v2, v3))
     gr.add_link(Link(v3, v4))
@@ -165,39 +169,30 @@ def test_graph_find_path_6_vertexes():
     assert path == [v1, v2, v5, v6]
 
 
-def test_graph_find_path_6_vertexes_opposite():
-    gr = LinkedGraph()
-    v1 = Vertex()
-    v2 = Vertex()
-    v3 = Vertex()
-    v4 = Vertex()
-    v5 = Vertex()
-    v6 = Vertex()
-    gr.add_link(Link(v1, v2))
-    gr.add_link(Link(v2, v5))
-    gr.add_link(Link(v5, v4))
-    gr.add_link(Link(v4, v6))
-    gr.add_link(Link(v2, v3))
-    gr.add_link(Link(v3, v6))
+def test_graph_find_path_6_vertexes_opposite(vs: Vs):
+    v1, v2, v3, v4, v5, v6 = vs
+    sut = LinkedGraph()
+    sut.add_link(Link(v1, v2))
+    sut.add_link(Link(v2, v5))
+    sut.add_link(Link(v5, v4))
+    sut.add_link(Link(v4, v6))
+    sut.add_link(Link(v2, v3))
+    sut.add_link(Link(v3, v6))
 
-    path = gr.find_path(v1, v6)
+    path = sut.find_path(v1, v6)
 
     assert path == [v1, v2, v3, v6]
 
 
-def test_graph_find_path_5_vertexes_with_circuit():
-    gr = LinkedGraph()
-    v1 = Vertex()
-    v2 = Vertex()
-    v3 = Vertex()
-    v4 = Vertex()
-    v5 = Vertex()
-    gr.add_link(Link(v1, v2))
-    gr.add_link(Link(v2, v3))
-    gr.add_link(Link(v2, v4))
-    gr.add_link(Link(v3, v4))
-    gr.add_link(Link(v4, v5))
+def test_graph_find_path_5_vertexes_with_circuit(vs: Vs):
+    v1, v2, v3, v4, v5, *_ = vs
+    sut = LinkedGraph()
+    sut.add_link(Link(v1, v2))
+    sut.add_link(Link(v2, v3))
+    sut.add_link(Link(v2, v4))
+    sut.add_link(Link(v3, v4))
+    sut.add_link(Link(v4, v5))
 
-    path = gr.find_path(v1, v5)
+    path = sut.find_path(v1, v5)
 
     assert path == [v1, v2, v4, v5]
