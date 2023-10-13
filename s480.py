@@ -59,6 +59,10 @@ class Link:
         return f"Link({self.v1}, {self.v2})"
 
 
+Path = Tuple[List[Vertex], List[Link]]
+PathSimple = List[Vertex]
+
+
 class LinkedGraph:
     def __init__(self) -> None:
         self._links: List[Link] = []
@@ -81,51 +85,44 @@ class LinkedGraph:
     def __repr__(self) -> str:
         return f"LinkedGraph({repr(self._vertex)}, {repr(self._links)})"
 
-    Path = Tuple[List[Vertex], List[Link]]
-    PathSimple = Optional[List[Vertex]]
-
     @cache
     def find_path(self, start: Vertex, stop: Vertex) -> PathSimple:
-        return self._find_path_recursive(start, stop)
+        self._stop = stop
+        return self._find_path_recursive(start)
 
     def _find_path_recursive(
         self,
         start: Vertex,
-        stop: Vertex,
         visited: Optional[List[Vertex]] = None,
-        path: PathSimple = None,
-        shortest: PathSimple = None,
     ) -> List[Vertex]:
         links_with_start = self._get_links_with_start(start)
 
+        path: PathSimple = []
         if visited is None:
             visited = []
-        if path is None:
-            path = []
-        if shortest is None:
-            shortest = []
-
-        path += [start]
         visited += [start]
 
-        if start == stop:
-            return path
+        if start == self._stop:
+            return [start]
 
         for link in links_with_start:
             other_vertex = self._get_other_vertex(link, start)
-            if other_vertex not in visited:
-                new_path = self._find_path_recursive(
-                    start=other_vertex,
-                    stop=stop,
-                    visited=visited[:],
-                    path=path[:],
-                )
-                shortest = (
-                    shortest
-                    if stop not in new_path and len(new_path) > len(shortest)
-                    else new_path
-                )
-        return shortest
+            path = self._go_to_next(start, visited, other_vertex)
+        return path
+
+    def _go_to_next(
+        self,
+        start: Vertex,
+        visited: PathSimple,
+        other_vertex: Vertex,
+    ) -> PathSimple:
+        if other_vertex not in visited:
+            next_stop = self._find_path_recursive(
+                start=other_vertex,
+                visited=visited[:],
+            )
+            return [start] + next_stop
+        return []
 
     def _get_links_with_start(self, start: Vertex) -> List[Link]:
         return [link for link in self._links if start in link]
