@@ -1,4 +1,4 @@
-from typing import Any, Tuple
+from typing import Tuple
 
 import pytest
 
@@ -187,12 +187,37 @@ def test_graph_find_path_6_vertexes_opposite(vs: Vs):
 def test_graph_find_path_5_vertexes_with_circuit(vs: Vs):
     v1, v2, v3, v4, v5, *_ = vs
     sut = LinkedGraph()
-    sut.add_link(Link(v1, v2))
-    sut.add_link(Link(v2, v3))
-    sut.add_link(Link(v2, v4))
-    sut.add_link(Link(v3, v4))
-    sut.add_link(Link(v4, v5))
+    sut.add_link(l1 := Link(v1, v2))
+    sut.add_link(l3 := Link(v2, v4))
+    sut.add_link(l5 := Link(v4, v5))
+    sut.add_link(_ := Link(v3, v4))
+    sut.add_link(_ := Link(v2, v3))
 
     path = sut.find_path(v1, v5)
 
-    assert path == [v1, v2, v4, v5]
+    assert path == ([v1, v2, v4, v5], [l1, l3, l5])
+
+
+def test_author_tests():
+    map2 = LinkedGraph()
+    v1 = Vertex()
+    v2 = Vertex()
+    v3 = Vertex()
+    v4 = Vertex()
+    v5 = Vertex()
+
+    map2.add_link(Link(v1, v2))
+    map2.add_link(Link(v2, v3))
+    map2.add_link(Link(v2, v4))
+    map2.add_link(Link(v3, v4))
+    map2.add_link(Link(v4, v5))
+
+    assert len(map2._links) == 5, "неверное число связей в списке _links класса LinkedGraph"
+    assert len(map2._vertex) == 5, "неверное число вершин в списке _vertex класса LinkedGraph"
+
+    map2.add_link(Link(v2, v1))
+    assert len(map2._links) == 5, "метод add_link() добавил связь Link(v2, v1), хотя уже имеется связь Link(v1, v2)"
+
+    path = map2.find_path(v1, v5)
+    s = sum([x.dist for x in path[1]])
+    assert s == 3, "неверная суммарная длина маршрута, возможно, некорректно работает объект-свойство dist"
