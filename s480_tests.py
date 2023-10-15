@@ -159,10 +159,10 @@ def test_graph_find_path_6_vertexes(vs: Vs):
     gr = LinkedGraph()
     gr.add_link(l1 := Link(v1, v2))
     gr.add_link(_ := Link(v2, v3))
-    gr.add_link(_ := Link(v3, v4))
+    gr.add_link(_ := Link(v4, v3))
     gr.add_link(_ := Link(v4, v6))
     gr.add_link(l5 := Link(v2, v5))
-    gr.add_link(l6 := Link(v5, v6))
+    gr.add_link(l6 := Link(v6, v5))
 
     path = gr.find_path(v1, v6)
 

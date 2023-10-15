@@ -86,45 +86,50 @@ class LinkedGraph:
 
     def find_path(self, start: Vertex, stop: Vertex) -> Path:
         self._stop = stop
+        self._visited_links: Optional[List[Link]] = None
         links_with_vertex = self._get_links_with_vertex(start)
         path_with_links = self._find_path_recursive(links_with_vertex)
         path_with_vertexes = _get_list_of_vertexes_from_links(path_with_links)
         return (path_with_vertexes, path_with_links)
 
     def _find_path_recursive(
-        self, links_with_vertex: List[Link], path: Optional[List[Link]] = None
+        self, links_with_vertex: List[Link]
     ) -> List[Link]:
-        if path is None:
-            path = []
+        # Make iteration over graph with iter
         shortest: List[Link] = []
         for link in links_with_vertex:
-            if link in path:
-                continue
-            path += [link]
             if self._stop in link:
-                return path
-            links_with_other_vertex = self._get_links_with_vertex(link.v2)
-            new_path = self._find_path_recursive(
-                links_with_other_vertex, path[:]
-            )
-            if (
-                len(shortest) == 0
-                or len(new_path) < len(shortest)
-                and self._stop in path[-1]
-            ):
-                shortest = new_path
+                return [link]
+            next_links = self._get_next_links(link)
+            latest_link = self._find_path_recursive(next_links)
+            shortest = [link] + latest_link
         return shortest
 
     def _get_links_with_vertex(self, start: Vertex) -> List[Link]:
         return [link for link in self._links if start in link]
+
+    def _get_next_links(self, initial_link: Link) -> List[Link]:
+        if self._visited_links is None:
+            self._visited_links = []
+        self._visited_links.append(initial_link)
+        return [
+            link
+            for link in self._links
+            if (initial_link.v1 in link or initial_link.v2 in link)
+            and link not in self._visited_links
+        ]
 
     def _get_other_vertex(self, link: Link, vertex: Vertex) -> Vertex:
         return link.v1 if link.v2 == vertex else link.v2
 
 
 def _get_list_of_vertexes_from_links(links: List[Link]) -> List[Vertex]:
-    vertexes: List[Vertex] = [link.v1 for link in links]
-    vertexes.append(links[-1].v2)
+    vertexes = []
+    for link in links:
+        if link.v1 not in vertexes:
+            vertexes.append(link.v1)
+        if link.v2 not in vertexes:
+            vertexes.append(link.v2)
     return vertexes
 
 
