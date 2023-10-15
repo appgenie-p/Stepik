@@ -124,7 +124,7 @@ class LinkedGraph:
 
 
 def _get_list_of_vertexes_from_links(links: List[Link]) -> List[Vertex]:
-    vertexes = []
+    vertexes: List[Vertex] = []
     for link in links:
         if link.v1 not in vertexes:
             vertexes.append(link.v1)
