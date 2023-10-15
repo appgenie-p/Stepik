@@ -92,17 +92,21 @@ class LinkedGraph:
         path_with_vertexes = _get_list_of_vertexes_from_links(path_with_links)
         return (path_with_vertexes, path_with_links)
 
-    def _find_path_recursive(
-        self, links_with_vertex: List[Link]
-    ) -> List[Link]:
+    def _find_path_recursive(self, current_links: List[Link]) -> List[Link]:
         # Make iteration over graph with iter
         shortest: List[Link] = []
-        for link in links_with_vertex:
+        for link in current_links:
             if self._stop in link:
                 return [link]
             next_links = self._get_next_links(link)
             latest_link = self._find_path_recursive(next_links)
-            shortest = [link] + latest_link
+            if len(shortest) == 0:
+                shortest = [link] + latest_link
+            else:
+                new_way = [link] + latest_link
+                shortest = (
+                    new_way if len(new_way) < len(shortest) else shortest
+                )
         return shortest
 
     def _get_links_with_vertex(self, start: Vertex) -> List[Link]:
