@@ -58,14 +58,15 @@ class Link:
         return f"Link({self.v1}, {self.v2})"
 
 
-PathSimple = List[Vertex]
-Path = Tuple[PathSimple, List[Link]]
+Vertexes = List[Vertex]
+Links = List[Link]
+Path = Tuple[Vertexes, Links]
 
 
 class LinkedGraph:
     def __init__(self) -> None:
-        self._links: List[Link] = []
-        self._vertex: List[Vertex] = []
+        self._links: Links = []
+        self._vertex: Vertexes = []
 
     def add_vertex(self, vertex: Vertex) -> None:
         if vertex in self._vertex:
@@ -86,15 +87,15 @@ class LinkedGraph:
 
     def find_path(self, start: Vertex, stop: Vertex) -> Path:
         self._stop = stop
-        self._visited_links: Optional[List[Link]] = None
+        self._visited_links: Optional[Links] = None
         links_with_vertex = self._get_links_with_vertex(start)
         path_with_links = self._find_path_recursive(links_with_vertex)
         path_with_vertexes = _get_list_of_vertexes_from_links(path_with_links)
         return (path_with_vertexes, path_with_links)
 
-    def _find_path_recursive(self, current_links: List[Link]) -> List[Link]:
+    def _find_path_recursive(self, current_links: Links) -> Links:
         # Make iteration over graph with iter
-        shortest: List[Link] = []
+        shortest: Links = []
         for link in current_links:
             if self._stop in link:
                 return [link]
@@ -106,15 +107,13 @@ class LinkedGraph:
                 new_way = [link] + latest_link
                 new_way_len = sum(link.dist for link in new_way)
                 shortest_len = sum(link.dist for link in shortest)
-                shortest = (
-                    new_way if new_way_len < shortest_len else shortest
-                )
+                shortest = new_way if new_way_len < shortest_len else shortest
         return shortest
 
-    def _get_links_with_vertex(self, start: Vertex) -> List[Link]:
+    def _get_links_with_vertex(self, start: Vertex) -> Links:
         return [link for link in self._links if start in link]
 
-    def _get_next_links(self, initial_link: Link) -> List[Link]:
+    def _get_next_links(self, initial_link: Link) -> Links:
         if self._visited_links is None:
             self._visited_links = []
         self._visited_links.append(initial_link)
@@ -125,12 +124,9 @@ class LinkedGraph:
             and link not in self._visited_links
         ]
 
-    def _get_other_vertex(self, link: Link, vertex: Vertex) -> Vertex:
-        return link.v1 if link.v2 == vertex else link.v2
 
-
-def _get_list_of_vertexes_from_links(links: List[Link]) -> List[Vertex]:
-    vertexes: List[Vertex] = []
+def _get_list_of_vertexes_from_links(links: Links) -> Vertexes:
+    vertexes: Vertexes = []
     for link in links:
         if link.v1 not in vertexes:
             vertexes.append(link.v1)
