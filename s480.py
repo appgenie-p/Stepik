@@ -1,5 +1,4 @@
-from functools import cache
-from typing import List, Optional, Tuple
+from typing import Any, List, Optional, Tuple
 
 
 class Vertex:
@@ -87,56 +86,46 @@ class LinkedGraph:
 
     def find_path(self, start: Vertex, stop: Vertex) -> Path:
         self._stop = stop
-        path_with_vertexes = self._find_path_recursive(start)
-        path_with_links = _create_links_from_vertexes(path_with_vertexes)
+        links_with_vertex = self._get_links_with_vertex(start)
+        path_with_links = self._find_path_recursive(links_with_vertex)
+        path_with_vertexes = _get_list_of_vertexes_from_links(path_with_links)
         return (path_with_vertexes, path_with_links)
 
-    # @cache
     def _find_path_recursive(
-        self,
-        start: Vertex,
-        visited: Optional[PathSimple] = None,
-    ) -> List[Vertex]:
-        links_with_start = self._get_links_with_start(start)
-
-        path: PathSimple = []
-        if visited is None:
-            visited = []
-        visited += [start]
-
-        if start == self._stop:
-            return visited
-
-        shortest: PathSimple = []
-        for link in links_with_start:
-            other_vertex = self._get_other_vertex(link, start)
-            if other_vertex not in visited:
-                path = self._find_path_recursive(
-                    start=other_vertex, visited=visited[:]
-                )
-                if len(shortest) == 0:
-                    shortest = path
-                else:
-                    shortest = (
-                        path
-                        if self._stop in path and len(path) < len(shortest)
-                        else shortest
-                    )
+        self, links_with_vertex: List[Link], path: Optional[List[Link]] = None
+    ) -> List[Link]:
+        if path is None:
+            path = []
+        shortest: List[Link] = []
+        for link in links_with_vertex:
+            if link in path:
+                continue
+            path += [link]
+            if self._stop in link:
+                return path
+            links_with_other_vertex = self._get_links_with_vertex(link.v2)
+            new_path = self._find_path_recursive(
+                links_with_other_vertex, path[:]
+            )
+            if (
+                len(shortest) == 0
+                or len(new_path) < len(shortest)
+                and self._stop in path[-1]
+            ):
+                shortest = new_path
         return shortest
 
-    def _get_links_with_start(self, start: Vertex) -> List[Link]:
+    def _get_links_with_vertex(self, start: Vertex) -> List[Link]:
         return [link for link in self._links if start in link]
 
     def _get_other_vertex(self, link: Link, vertex: Vertex) -> Vertex:
         return link.v1 if link.v2 == vertex else link.v2
 
 
-def _create_links_from_vertexes(vertexes: List[Vertex]) -> List[Link]:
-    links: List[Link] = []
-    for i in range(len(vertexes) - 1):
-        link = Link(vertexes[i], vertexes[i + 1])
-        links.append(link)
-    return links
+def _get_list_of_vertexes_from_links(links: List[Link]) -> List[Vertex]:
+    vertexes: List[Vertex] = [link.v1 for link in links]
+    vertexes.append(links[-1].v2)
+    return vertexes
 
 
 class Station(Vertex):
@@ -152,31 +141,3 @@ class LinkMetro(Link):
     def __init__(self, v1: Vertex, v2: Vertex, dist: int):
         super().__init__(v1, v2)
         self._dist = dist
-
-
-
-map_metro = LinkedGraph()
-v1 = Station("Сретенский бульвар")
-v2 = Station("Тургеневская")
-v3 = Station("Чистые пруды")
-v4 = Station("Лубянка")
-v5 = Station("Кузнецкий мост")
-v6 = Station("Китай-город 1")
-v7 = Station("Китай-город 2")
-
-map_metro.add_link(LinkMetro(v1, v2, 1))
-map_metro.add_link(LinkMetro(v2, v3, 1))
-map_metro.add_link(LinkMetro(v1, v3, 1))
-
-map_metro.add_link(LinkMetro(v4, v5, 1))
-map_metro.add_link(LinkMetro(v6, v7, 1))
-
-map_metro.add_link(LinkMetro(v2, v7, 5))
-map_metro.add_link(LinkMetro(v3, v4, 3))
-map_metro.add_link(LinkMetro(v5, v6, 3))
-
-print(len(map_metro._links))
-print(len(map_metro._vertex))
-path = map_metro.find_path(v1, v6)  # от сретенского бульвара до китай-город 1
-print(path[0])    # [Сретенский бульвар, Тургеневская, Китай-город 2, Китай-город 1]
-print(sum([x.dist for x in path[1]]))  # 7
