@@ -104,8 +104,10 @@ class LinkedGraph:
                 shortest = [link] + latest_link
             else:
                 new_way = [link] + latest_link
+                new_way_len = sum(link.dist for link in new_way)
+                shortest_len = sum(link.dist for link in shortest)
                 shortest = (
-                    new_way if len(new_way) < len(shortest) else shortest
+                    new_way if new_way_len < shortest_len else shortest
                 )
         return shortest
 
