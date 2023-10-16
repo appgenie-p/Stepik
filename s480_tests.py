@@ -260,4 +260,15 @@ def test_author_test2():
     assert str(path[0]) == "[1, 2, 3, 4, 5]", path[0]
     s = sum([x.dist for x in path[1]])
     assert s == 7, "неверная суммарная длина маршрута для карты метро"
- 
+
+
+def test_graph_find_path_3_vertexes_for_iter(vs: Vs):
+    v1, v2, v3, *_ = vs
+    sut = LinkedGraph()
+    sut.add_link(l1 := Link(v1, v2))
+    sut.add_link(l2 := Link(v2, v3))
+    sut_iterator = iter(sut)
+    assert next(sut_iterator) == l1
+    assert next(sut_iterator) == l2
+    with pytest.raises(StopIteration):
+        next(sut_iterator)

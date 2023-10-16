@@ -1,16 +1,20 @@
 from typing import List, Optional, Tuple
 
+Vertexes = List["Vertex"]
+Links = List["Link"]
+Route = Tuple[Vertexes, Links]
+
 
 class Vertex:
     counter = 0
 
     def __init__(self) -> None:
-        self._links: List["Link"] = []
+        self._links: Links = []
         Vertex.counter += 1
         self._id = Vertex.counter
 
     @property
-    def links(self) -> List["Link"]:
+    def links(self) -> Links:
         return self._links
 
     def __repr__(self) -> str:
@@ -58,15 +62,14 @@ class Link:
         return f"Link({self.v1}, {self.v2})"
 
 
-Vertexes = List[Vertex]
-Links = List[Link]
-Path = Tuple[Vertexes, Links]
-
-
 class LinkedGraph:
     def __init__(self) -> None:
         self._links: Links = []
         self._vertex: Vertexes = []
+
+    @property
+    def links(self):
+        return self._links
 
     def add_vertex(self, vertex: Vertex) -> None:
         if vertex in self._vertex:
@@ -85,12 +88,12 @@ class LinkedGraph:
     def __repr__(self) -> str:
         return f"LinkedGraph({repr(self._vertex)}, {repr(self._links)})"
 
-    def find_path(self, start: Vertex, stop: Vertex) -> Path:
+    def find_path(self, start: Vertex, stop: Vertex) -> Route:
         self._stop = stop
         self._visited_links: Optional[Links] = None
         links_with_vertex = self._get_links_with_vertex(start)
         route_with_links = self._find_route_recursive(links_with_vertex)
-        route_with_vertexes = _get_vertexes_from_links(route_with_links)
+        route_with_vertexes = self._get_vertexes_from_links(route_with_links)
         return (route_with_vertexes, route_with_links)
 
     def _find_route_recursive(self, current_links: Links) -> Links:
@@ -124,16 +127,49 @@ class LinkedGraph:
             and link not in self._visited_links
         ]
 
+    @staticmethod
+    def _get_vertexes_from_links(links: Links) -> Vertexes:
+        vertexes: Vertexes = []
+        for link in links:
+            if link.v1 not in vertexes:
+                vertexes.append(link.v1)
+            if link.v2 not in vertexes:
+                vertexes.append(link.v2)
+        return vertexes
 
-def _get_vertexes_from_links(links: Links) -> Vertexes:
-    vertexes: Vertexes = []
-    for link in links:
-        if link.v1 not in vertexes:
-            vertexes.append(link.v1)
-        if link.v2 not in vertexes:
-            vertexes.append(link.v2)
-    return vertexes
+    def __iter__(self):
+        return LinkedGraphIterator(self)
 
+
+class LinkedGraphIterator:
+    def __init__(self, graph: LinkedGraph) -> None:
+        self._graph = graph
+        self._index = 0
+        self._visited_links: Optional[Links] = None
+        self._initial_link = graph.links[0]
+
+    def __next__(self) -> Link:
+        if self._visited_links is None:
+            self._visited_links = []
+        self._visited_links.append(self._initial_link)
+        next_links = self._get_next_links(self._initial_link)
+        for link in next_links:
+            if link not in self._visited_links:
+                return_link = self._initial_link
+                self._initial_link = link
+                return return_link
+        raise StopIteration
+
+    def _get_next_links(self, initial_link: Link) -> Links:
+        if self._visited_links is None:
+            self._visited_links = []
+        self._visited_links.append(initial_link)
+        return [
+            link
+            for link in self._graph.links
+            if (initial_link.v1 in link or initial_link.v2 in link)
+            and link not in self._visited_links
+        ]
 
 class Station(Vertex):
     def __init__(self, name: str) -> None:
