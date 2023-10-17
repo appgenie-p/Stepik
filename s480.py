@@ -71,6 +71,10 @@ class LinkedGraph:
     def links(self):
         return self._links
 
+    @property
+    def vertexes(self):
+        return self._vertex
+
     def add_vertex(self, vertex: Vertex) -> None:
         if vertex in self._vertex:
             return
@@ -91,30 +95,32 @@ class LinkedGraph:
     def find_path(self, start: Vertex, stop: Vertex) -> Route:
         self._stop = stop
         self._visited_links: Optional[Links] = None
-        links_with_vertex = self._get_links_with_vertex(start)
-        route_with_links = self._find_route_recursive(links_with_vertex)
-        route_with_vertexes = self._get_vertexes_from_links(route_with_links)
-        return (route_with_vertexes, route_with_links)
+        links_with_start_v = [link for link in self._links if start in link]
+        route_from_links = self._find_route_recursive(links_with_start_v)
+        route_from_vertexes = self._get_vertexes_from_links(route_from_links)
+        return (route_from_vertexes, route_from_links)
 
     def _find_route_recursive(self, current_links: Links) -> Links:
-        # Make iteration over graph with iter
-        shortest: Links = []
+        route: Links = []
         for link in current_links:
             if self._stop in link:
                 return [link]
             next_links = self._get_next_links(link)
-            latest_link = self._find_route_recursive(next_links)
-            if len(shortest) == 0:
-                shortest = [link] + latest_link
+            shortest_route_from_link = self._find_route_recursive(next_links)
+            if len(route) == 0:
+                route = [link] + shortest_route_from_link
             else:
-                new_way = [link] + latest_link
-                new_way_len = sum(link.dist for link in new_way)
-                shortest_len = sum(link.dist for link in shortest)
-                shortest = new_way if new_way_len < shortest_len else shortest
-        return shortest
+                route_candidate = [link] + shortest_route_from_link
+                route = (
+                    route_candidate
+                    if self._route_distance(route_candidate)
+                    < self._route_distance(route)
+                    else route
+                )
+        return route
 
-    def _get_links_with_vertex(self, start: Vertex) -> Links:
-        return [link for link in self._links if start in link]
+    def _route_distance(self, route: Links):
+        return sum(link.dist for link in route)
 
     def _get_next_links(self, initial_link: Link) -> Links:
         if self._visited_links is None:
@@ -137,39 +143,6 @@ class LinkedGraph:
                 vertexes.append(link.v2)
         return vertexes
 
-    def __iter__(self):
-        return LinkedGraphIterator(self)
-
-
-class LinkedGraphIterator:
-    def __init__(self, graph: LinkedGraph) -> None:
-        self._graph = graph
-        self._index = 0
-        self._visited_links: Optional[Links] = None
-        self._initial_link = graph.links[0]
-
-    def __next__(self) -> Link:
-        if self._visited_links is None:
-            self._visited_links = []
-        self._visited_links.append(self._initial_link)
-        next_links = self._get_next_links(self._initial_link)
-        for link in next_links:
-            if link not in self._visited_links:
-                return_link = self._initial_link
-                self._initial_link = link
-                return return_link
-        raise StopIteration
-
-    def _get_next_links(self, initial_link: Link) -> Links:
-        if self._visited_links is None:
-            self._visited_links = []
-        self._visited_links.append(initial_link)
-        return [
-            link
-            for link in self._graph.links
-            if (initial_link.v1 in link or initial_link.v2 in link)
-            and link not in self._visited_links
-        ]
 
 class Station(Vertex):
     def __init__(self, name: str) -> None:

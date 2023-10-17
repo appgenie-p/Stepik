@@ -2,7 +2,7 @@ from typing import Tuple
 
 import pytest
 
-from s480 import Link, LinkedGraph, LinkMetro, Station, Vertex
+from s480_deijkstra import Link, LinkedGraph, LinkMetro, Station, Vertex
 
 
 def test_vertex_creation():
@@ -252,7 +252,7 @@ def test_author_test2():
         len(map2.links) == 5
     ), "неверное число связей в списке _links класса LinkedGraph"
     assert (
-        len(map2._vertex) == 5
+        len(map2.vertexes) == 5
     ), "неверное число вершин в списке _vertex класса LinkedGraph"
 
     path = map2.find_path(v1, v5)
